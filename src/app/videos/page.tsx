@@ -21,7 +21,9 @@ import {
   BarChart3,
   MessageCircle,
   Zap,
-  Star
+  Star,
+  Volume2,
+  Maximize2
 } from 'lucide-react'
 import { videos, categories, getVideosByCategory, searchVideos, getPaginatedVideos, type Video } from '@/data/videos'
 
@@ -245,9 +247,43 @@ export default function VideosPage() {
                   >
                     {/* Thumbnail */}
                     <div className={`relative ${viewMode === 'list' ? 'w-48 h-32 flex-shrink-0' : 'h-48'}`}>
-                      <div className="w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center">
+                      {/* Display actual thumbnail if available */}
+                      {video.thumbnail ? (
+                        <img 
+                          src={video.thumbnail} 
+                          alt={video.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Fallback to gradient if image fails to load
+                            e.currentTarget.style.display = 'none';
+                            const fallback = e.currentTarget.nextElementSibling;
+                            if (fallback) {
+                              (fallback as HTMLElement).style.display = 'flex';
+                            }
+                          }}
+                        />
+                      ) : null}
+                      
+                      {/* Fallback gradient background */}
+                      <div className={`w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
                         <Play className="w-12 h-12 text-amber-400 group-hover:scale-110 transition-transform" />
                       </div>
+                      
+                      {/* Video Controls Overlay */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <div className="flex items-center space-x-3">
+                          <button className="w-10 h-10 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
+                            <Play className="w-5 h-5 text-black" />
+                          </button>
+                          <button className="w-8 h-8 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                            <Volume2 className="w-4 h-4 text-white" />
+                          </button>
+                          <button className="w-8 h-8 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                            <Maximize2 className="w-4 h-4 text-white" />
+                          </button>
+                        </div>
+                      </div>
+                      
                       <div className="absolute top-2 right-2 bg-black/80 text-white px-2 py-1 rounded text-xs">
                         {video.duration}
                       </div>

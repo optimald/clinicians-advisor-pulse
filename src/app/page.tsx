@@ -1,11 +1,106 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2 } from 'lucide-react'
 import { videos, categories } from '@/data/videos'
+import React from 'react'
 
 export default function Home() {
   const router = useRouter()
+  const [isPlaying, setIsPlaying] = useState<string | null>(null)
+  const [volume, setVolume] = useState<number>(1)
+  const [isMuted, setIsMuted] = useState<boolean>(false)
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
+  const [currentVideo, setCurrentVideo] = useState<string | null>(null)
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null)
+
+  // Show notification
+  const showNotification = (message: string, type: 'success' | 'info' | 'error' = 'info') => {
+    setNotification({ message, type })
+    setTimeout(() => setNotification(null), 3000)
+  }
+
+  // Video player functions
+  const togglePlay = (videoId: string) => {
+    if (isPlaying === videoId) {
+      setIsPlaying(null)
+      setCurrentVideo(null)
+      showNotification('Video paused', 'info')
+    } else {
+      setIsPlaying(videoId)
+      setCurrentVideo(videoId)
+      showNotification('Video playing', 'success')
+    }
+  }
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted)
+    if (isMuted) {
+      setVolume(1)
+      showNotification('Sound unmuted', 'info')
+    } else {
+      setVolume(0)
+      showNotification('Sound muted', 'info')
+    }
+  }
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen()
+      setIsFullscreen(true)
+      showNotification('Entered fullscreen mode', 'info')
+    } else {
+      document.exitFullscreen()
+      setIsFullscreen(false)
+      showNotification('Exited fullscreen mode', 'info')
+    }
+  }
+
+  const handleVolumeChange = (newVolume: number) => {
+    setVolume(newVolume)
+    setIsMuted(newVolume === 0)
+    if (newVolume > 0 && isMuted) {
+      setIsMuted(false)
+    }
+  }
+
+  // Volume slider component
+  const VolumeSlider = () => (
+    <div className="relative group">
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        value={volume}
+        onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+        className="w-16 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+        style={{
+          background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${volume * 100}%, #4b5563 ${volume * 100}%, #4b5563 100%)`
+        }}
+      />
+      <style jsx>{`
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background: #f59e0b;
+          cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background: #f59e0b;
+          cursor: pointer;
+          border: none;
+        }
+      `}</style>
+    </div>
+  )
 
   // Get featured videos for homepage showcase
   const featuredVideos = videos.slice(0, 6) // First 6 videos as featured
@@ -133,8 +228,42 @@ export default function Home() {
       duration: '5:15',
       views: '189',
       category: 'Device Training'
+    },
+    {
+      id: '4',
+      title: 'Quanta System ECHO Device',
+      description: 'Comprehensive overview of ECHO device capabilities',
+      thumbnail: 'https://img.youtube.com/vi/yiElNyuRtrc/maxresdefault.jpg',
+      duration: '3:20',
+      views: '312',
+      category: 'Device Highlights'
     }
   ]
+
+  // Keyboard shortcuts for video controls
+  React.useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (currentVideo) {
+        switch (event.key.toLowerCase()) {
+          case ' ':
+            event.preventDefault()
+            togglePlay(currentVideo)
+            break
+          case 'm':
+            event.preventDefault()
+            toggleMute()
+            break
+          case 'f':
+            event.preventDefault()
+            toggleFullscreen()
+            break
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyPress)
+    return () => document.removeEventListener('keydown', handleKeyPress)
+  }, [currentVideo])
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -169,6 +298,25 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* Notification System */}
+      {notification && (
+        <div className={`fixed top-20 right-4 z-50 px-4 py-2 rounded-lg shadow-lg transition-all duration-300 ${
+          notification.type === 'success' ? 'bg-green-500 text-white' :
+          notification.type === 'error' ? 'bg-red-500 text-white' :
+          'bg-blue-500 text-white'
+        }`}>
+          <div className="flex items-center space-x-2">
+            <span>{notification.message}</span>
+            <button 
+              onClick={() => setNotification(null)}
+              className="ml-2 hover:opacity-75"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section - Video-Centric like Vimeo */}
       <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 overflow-hidden">
@@ -238,7 +386,15 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {videoPreviews.map((video) => (
                     <div key={video.id} className="relative group cursor-pointer">
-                      <div className="relative h-24 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded-lg overflow-hidden">
+                      <div className="relative h-20 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded-lg overflow-hidden">
+                        {/* Now Playing Indicator */}
+                        {isPlaying === video.id && (
+                          <div className="absolute top-1 left-1 bg-amber-400 text-black px-1 py-0.5 rounded-full text-xs font-bold z-10 flex items-center space-x-1">
+                            <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
+                            <span>LIVE</span>
+                          </div>
+                        )}
+                        
                         {/* Video Thumbnail - Now properly displayed */}
                         {video.thumbnail ? (
                           <img 
@@ -258,33 +414,63 @@ export default function Home() {
                         
                         {/* Fallback gradient background */}
                         <div className={`w-full h-full bg-gradient-to-br from-amber-400/30 to-purple-500/30 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
-                          <Play className="w-8 h-8 text-amber-400 group-hover:scale-110 transition-transform" />
+                          <Play className="w-6 h-6 text-amber-400 group-hover:scale-110 transition-transform" />
                         </div>
                         
                         {/* Video Controls Overlay */}
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
                           <div className="flex items-center space-x-2">
-                            <button className="w-8 h-8 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
-                              <Play className="w-4 h-4 text-black" />
+                            <button 
+                              className="w-6 h-6 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                togglePlay(video.id)
+                              }}
+                            >
+                              {isPlaying === video.id ? (
+                                <Pause className="w-3 h-3 text-black" />
+                              ) : (
+                                <Play className="w-3 h-3 text-black" />
+                              )}
                             </button>
-                            <button className="w-6 h-6 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                              <Volume2 className="w-3 h-3 text-white" />
+                            <button 
+                              className="w-5 h-5 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                toggleMute()
+                              }}
+                            >
+                              {isMuted ? (
+                                <VolumeX className="w-2.5 h-2.5 text-white" />
+                              ) : (
+                                <Volume2 className="w-2.5 h-2.5 text-white" />
+                              )}
                             </button>
-                            <button className="w-6 h-6 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                              <Maximize2 className="w-3 h-3 text-white" />
+                            <button 
+                              className="w-5 h-5 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                toggleFullscreen()
+                              }}
+                            >
+                              {isFullscreen ? (
+                                <Minimize2 className="w-2.5 h-2.5 text-white" />
+                              ) : (
+                                <Maximize2 className="w-2.5 h-2.5 text-white" />
+                              )}
                             </button>
                           </div>
                         </div>
                         
                         {/* Duration Badge */}
-                        <div className="absolute bottom-2 right-2 bg-black/80 text-white px-1 py-0.5 rounded text-xs">
+                        <div className="absolute bottom-1 right-1 bg-black/80 text-white px-1 py-0.5 rounded text-xs">
                           {video.duration}
                         </div>
                       </div>
                       
                       {/* Video Info */}
-                      <div className="mt-2">
-                        <h4 className="font-semibold text-white text-sm leading-tight line-clamp-2">
+                      <div className="mt-1">
+                        <h4 className="font-semibold text-white text-xs leading-tight line-clamp-2">
                           {video.title}
                         </h4>
                         <p className="text-gray-400 text-xs mt-1">
@@ -317,6 +503,197 @@ export default function Home() {
                 <div className="text-gray-400">{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Videos Section - Moved to be right after hero */}
+      <section className="py-20 bg-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">
+              <span className="text-white">Featured</span>{' '}
+              <span className="text-amber-400">Training Videos</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Start with these essential videos covering key topics in medical aesthetics
+            </p>
+          </div>
+
+          {/* Featured Videos Grid - Larger, More Prominent */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {featuredVideos.map((video) => (
+              <div
+                key={video.id}
+                className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all cursor-pointer group"
+                onClick={() => router.push('/videos')}
+              >
+                {/* Enhanced Video Thumbnail */}
+                <div className="relative h-64">
+                  {/* Now Playing Indicator */}
+                  {isPlaying === video.id && (
+                    <div className="absolute top-3 left-3 bg-amber-400 text-black px-2 py-1 rounded-full text-xs font-bold z-10 flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
+                      <span>LIVE</span>
+                    </div>
+                  )}
+                  
+                  {/* Display actual thumbnail if available */}
+                  {video.thumbnail ? (
+                    <img 
+                      src={video.thumbnail} 
+                      alt={video.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Fallback to gradient if image fails to load
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.nextElementSibling;
+                        if (fallback) {
+                          (fallback as HTMLElement).style.display = 'flex';
+                        }
+                      }}
+                    />
+                  ) : null}
+                  
+                  {/* Fallback gradient background */}
+                  <div className={`w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
+                    <Play className="w-20 h-20 text-amber-400 group-hover:scale-110 transition-transform" />
+                  </div>
+                  
+                  {/* Video Controls Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <div className="flex items-center space-x-3">
+                      <button 
+                        className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors relative group"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          togglePlay(video.id)
+                        }}
+                      >
+                        {isPlaying === video.id ? (
+                          <Pause className="w-6 h-6 text-black" />
+                        ) : (
+                          <Play className="w-6 h-6 text-black" />
+                        )}
+                        
+                        {/* Play/Pause Tooltip */}
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                          <div className="bg-black/90 text-white px-3 py-2 rounded-lg whitespace-nowrap text-sm">
+                            {isPlaying === video.id ? 'Pause (Spacebar)' : 'Play (Spacebar)'}
+                          </div>
+                          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90 mx-auto"></div>
+                        </div>
+                      </button>
+                      
+                      <button 
+                        className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors relative group"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          toggleMute()
+                        }}
+                      >
+                        {isMuted ? (
+                          <VolumeX className="w-4 h-4 text-white" />
+                        ) : (
+                          <Volume2 className="w-4 h-4 text-white" />
+                        )}
+                        
+                        {/* Volume Tooltip */}
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                          <div className="bg-black/90 text-white px-3 py-2 rounded-lg whitespace-nowrap text-sm">
+                            {isMuted ? 'Unmute (M)' : 'Mute (M)'}
+                          </div>
+                          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90 mx-auto"></div>
+                        </div>
+                      </button>
+                      
+                      <button 
+                        className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors relative group"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          toggleFullscreen()
+                        }}
+                      >
+                        {isFullscreen ? (
+                          <Minimize2 className="w-4 h-4 text-white" />
+                        ) : (
+                          <Maximize2 className="w-4 h-4 text-white" />
+                        )}
+                        
+                        {/* Fullscreen Tooltip */}
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                          <div className="bg-black/90 text-white px-3 py-2 rounded-lg whitespace-nowrap text-sm">
+                            {isFullscreen ? 'Exit Fullscreen (F)' : 'Fullscreen (F)'}
+                          </div>
+                          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90 mx-auto"></div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Duration Badge */}
+                  <div className="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
+                    {video.duration}
+                  </div>
+                  
+                  {/* Views Badge */}
+                  <div className="absolute bottom-3 left-3 bg-black/80 text-white px-2 py-1 rounded text-xs flex items-center space-x-1">
+                    <Eye className="w-3 h-3" />
+                    <span>{video.views}</span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
+                      {categories.find(c => c.id === video.category)?.name}
+                    </span>
+                    {video.difficulty && (
+                      <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+                        {video.difficulty}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="font-semibold text-lg mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
+                    {video.title}
+                  </h3>
+
+                  <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                    {video.description}
+                  </p>
+
+                  {video.instructor && (
+                    <p className="text-amber-400 text-sm mb-4 font-medium">
+                      Instructor: {video.instructor}
+                    </p>
+                  )}
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap gap-1">
+                      {video.tags.slice(0, 2).map((tag, index) => (
+                        <span key={index} className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* View All Videos CTA */}
+          <div className="text-center">
+            <button
+              onClick={() => router.push('/videos')}
+              className="inline-flex items-center space-x-3 px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
+            >
+              <span>View All 201+ Videos</span>
+              <ArrowRight className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </section>
@@ -367,133 +744,6 @@ export default function Home() {
                 <p className="text-gray-400">{step.description}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Videos Section - More Prominent */}
-      <section className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="text-white">Featured</span>{' '}
-              <span className="text-amber-400">Training Videos</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Start with these essential videos covering key topics in medical aesthetics
-            </p>
-          </div>
-
-                {/* Featured Videos Grid - Larger, More Prominent */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                  {featuredVideos.map((video) => (
-                    <div
-                      key={video.id}
-                      className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all cursor-pointer group"
-                      onClick={() => router.push('/videos')}
-                    >
-                      {/* Enhanced Video Thumbnail */}
-                      <div className="relative h-64">
-                        {/* Display actual thumbnail if available */}
-                        {video.thumbnail ? (
-                          <img 
-                            src={video.thumbnail} 
-                            alt={video.title}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              // Fallback to gradient if image fails to load
-                              e.currentTarget.style.display = 'none';
-                              const fallback = e.currentTarget.nextElementSibling;
-                              if (fallback) {
-                                (fallback as HTMLElement).style.display = 'flex';
-                              }
-                            }}
-                          />
-                        ) : null}
-                        
-                        {/* Fallback gradient background */}
-                        <div className={`w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
-                          <Play className="w-20 h-20 text-amber-400 group-hover:scale-110 transition-transform" />
-                        </div>
-                        
-                        {/* Video Controls Overlay */}
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <div className="flex items-center space-x-3">
-                            <button className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
-                              <Play className="w-6 h-6 text-black" />
-                            </button>
-                            <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                              <Volume2 className="w-5 h-5 text-white" />
-                            </button>
-                            <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                              <Maximize2 className="w-5 h-5 text-white" />
-                            </button>
-                          </div>
-                        </div>
-                        
-                        {/* Duration Badge */}
-                        <div className="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
-                          {video.duration}
-                        </div>
-                        
-                        {/* Views Badge */}
-                        <div className="absolute bottom-3 left-3 bg-black/80 text-white px-2 py-1 rounded text-xs flex items-center space-x-1">
-                          <Eye className="w-3 h-3" />
-                          <span>{video.views}</span>
-                        </div>
-                      </div>
-
-                      {/* Content */}
-                      <div className="p-6">
-                        <div className="flex items-center space-x-2 mb-3">
-                          <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
-                            {categories.find(c => c.id === video.category)?.name}
-                          </span>
-                          {video.difficulty && (
-                            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
-                              {video.difficulty}
-                            </span>
-                          )}
-                        </div>
-
-                        <h3 className="font-semibold text-lg mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
-                          {video.title}
-                        </h3>
-
-                        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                          {video.description}
-                        </p>
-
-                        {video.instructor && (
-                          <p className="text-amber-400 text-sm mb-4 font-medium">
-                            Instructor: {video.instructor}
-                          </p>
-                        )}
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-wrap gap-1">
-                            {video.tags.slice(0, 2).map((tag, index) => (
-                              <span key={index} className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <ChevronRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-          {/* View All Videos CTA */}
-          <div className="text-center">
-            <button
-              onClick={() => router.push('/videos')}
-              className="inline-flex items-center space-x-3 px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
-            >
-              <span>View All 201+ Videos</span>
-              <ArrowRight className="w-6 h-6" />
-            </button>
           </div>
         </div>
       </section>
