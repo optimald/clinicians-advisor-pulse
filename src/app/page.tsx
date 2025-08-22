@@ -28,7 +28,7 @@ export default function Home() {
 
 
   // Get featured videos for homepage showcase
-  const featuredVideos = videos.slice(0, 6) // First 6 videos as featured
+  const featuredVideos = videos.slice(0, 12) // First 12 videos as featured
 
   // Platform data
   const courses = [
@@ -316,7 +316,7 @@ export default function Home() {
               <div className="flex items-center space-x-6 text-sm text-gray-400">
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-5 h-5 text-amber-400" />
-                  <span>201+ Training Videos</span>
+                  <span>{videos.length}+ Training Videos</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-5 h-5 text-amber-400" />
@@ -552,6 +552,103 @@ export default function Home() {
               <span>View All 201+ Videos</span>
               <ArrowRight className="w-6 h-6" />
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Categories Section - Show More Videos */}
+      <section className="py-20 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              EXPLORE VIDEOS BY<br />
+              <span className="text-amber-400">CATEGORY</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Browse our complete library of 201+ videos organized by topic and expertise level
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {categories.slice(0, 6).map((category) => {
+              const categoryVideos = videos.filter(v => v.category === category.id).slice(0, 4)
+              return (
+                <div key={category.id} className="bg-black/50 rounded-xl overflow-hidden border border-gray-800">
+                  <div className="p-6">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center">
+                        {getIconComponent(category.icon)}
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold">{category.name}</h3>
+                        <p className="text-amber-400 text-sm">{category.count} videos</p>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {categoryVideos.map((video) => (
+                        <motion.div
+                          key={video.id}
+                          className="flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg cursor-pointer group"
+                          onClick={() => openVideo(video)}
+                          whileHover={{ 
+                            scale: 1.02,
+                            rotateY: 2,
+                            backgroundColor: "rgba(245, 158, 11, 0.1)"
+                          }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <div className="w-16 h-12 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded overflow-hidden flex-shrink-0">
+                            {video.thumbnail ? (
+                              <img 
+                                src={video.thumbnail} 
+                                alt={video.title}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <Play className="w-6 h-6 text-amber-400" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-sm line-clamp-2 group-hover:text-amber-400 transition-colors">
+                              {video.title}
+                            </h4>
+                            <p className="text-xs text-gray-400 mt-1">
+                              {video.duration} • {video.views} views
+                            </p>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                    
+                    <button 
+                      onClick={() => router.push('/videos')}
+                      className="w-full py-3 bg-amber-400/10 text-amber-400 rounded-lg hover:bg-amber-400/20 transition-all font-medium"
+                    >
+                      View All {category.count} Videos
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="text-center">
+            <motion.button
+              onClick={() => router.push('/videos')}
+              className="px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
+              whileHover={{ 
+                scale: 1.05,
+                rotateY: 5,
+                boxShadow: "0 20px 40px rgba(245, 158, 11, 0.3)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              Browse Complete Video Library
+            </motion.button>
           </div>
         </div>
       </section>
