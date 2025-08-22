@@ -105,34 +105,34 @@ export default function Home() {
     }
   ]
 
-  // Video preview data with actual content
+  // Video preview data with actual content from scraped site
   const videoPreviews = [
     {
       id: '1',
-      title: 'ECHO Treatment Protocols',
-      description: 'Advanced training for medical professionals',
-      thumbnail: '/api/placeholder/400/225/amber/white?text=ECHO+Treatment',
-      duration: '8:45',
-      views: '2.4K',
-      category: 'Device Training'
+      title: 'LIPOcel Animation',
+      description: 'Comprehensive animation demonstrating LIPOcel technology',
+      thumbnail: 'https://img.youtube.com/vi/jbWidiQOkgA/mqdefault.jpg',
+      duration: '2:15',
+      views: '290',
+      category: 'Device Highlights'
     },
     {
       id: '2',
-      title: 'Botox Injection Techniques',
-      description: 'Master the latest injection methods',
-      thumbnail: '/api/placeholder/400/225/blue/white?text=Botox+Techniques',
-      duration: '12:30',
-      views: '1.8K',
-      category: 'Injectables'
+      title: 'Meet MultiFrax - Webinar',
+      description: 'Expert webinar hosted by Dr. Jeanine Downie',
+      thumbnail: 'https://img.youtube.com/vi/blfoEQpoRHo/maxresdefault.jpg',
+      duration: '45:30',
+      views: '427',
+      category: 'Webinars'
     },
     {
       id: '3',
-      title: 'Laser Safety Protocols',
-      description: 'Essential safety guidelines for laser treatments',
-      thumbnail: '/api/placeholder/400/225/purple/white?text=Laser+Safety',
-      duration: '15:20',
-      views: '3.1K',
-      category: 'Laser & Energy'
+      title: 'ECHO Treatment Screen GUI',
+      description: 'Detailed walkthrough of ECHO interface',
+      thumbnail: 'https://img.youtube.com/vi/xgMHgiiGRec/maxresdefault.jpg',
+      duration: '5:15',
+      views: '189',
+      category: 'Device Training'
     }
   ]
 
@@ -181,9 +181,9 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
-                YOUR VIDEOS,<br />
-                <span className="text-amber-400">YOUR WAY</span><br />
-                IN MEDICAL AESTHETICS
+                ADVANCE YOUR<br />
+                <span className="text-amber-400">MEDICAL AESTHETICS</span><br />
+                CAREER
               </h1>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
                 Join the definitive digital ecosystem where verified medical aesthetics professionals can build their expertise, 
