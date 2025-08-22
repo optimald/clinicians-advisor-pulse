@@ -4,103 +4,28 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2 } from 'lucide-react'
-import { videos, categories } from '@/data/videos'
+import { videos, categories, Video } from '@/data/videos'
+import VideoPlayer from '@/components/VideoPlayer'
 import React from 'react'
 
 export default function Home() {
   const router = useRouter()
-  const [isPlaying, setIsPlaying] = useState<string | null>(null)
-  const [volume, setVolume] = useState<number>(1)
-  const [isMuted, setIsMuted] = useState<boolean>(false)
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
-  const [currentVideo, setCurrentVideo] = useState<string | null>(null)
-  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null)
+  const [selectedVideo, setSelectedVideo] = useState<typeof videos[0] | null>(null)
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false)
 
-  // Show notification
-  const showNotification = (message: string, type: 'success' | 'info' | 'error' = 'info') => {
-    setNotification({ message, type })
-    setTimeout(() => setNotification(null), 3000)
+  // Open video in modal player
+  const openVideo = (video: typeof videos[0]) => {
+    setSelectedVideo(video)
+    setIsPlayerOpen(true)
   }
 
-  // Video player functions
-  const togglePlay = (videoId: string) => {
-    if (isPlaying === videoId) {
-      setIsPlaying(null)
-      setCurrentVideo(null)
-      showNotification('Video paused', 'info')
-    } else {
-      setIsPlaying(videoId)
-      setCurrentVideo(videoId)
-      showNotification('Video playing', 'success')
-    }
+  // Close video player
+  const closeVideo = () => {
+    setSelectedVideo(null)
+    setIsPlayerOpen(false)
   }
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted)
-    if (isMuted) {
-      setVolume(1)
-      showNotification('Sound unmuted', 'info')
-    } else {
-      setVolume(0)
-      showNotification('Sound muted', 'info')
-    }
-  }
 
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen()
-      setIsFullscreen(true)
-      showNotification('Entered fullscreen mode', 'info')
-    } else {
-      document.exitFullscreen()
-      setIsFullscreen(false)
-      showNotification('Exited fullscreen mode', 'info')
-    }
-  }
-
-  const handleVolumeChange = (newVolume: number) => {
-    setVolume(newVolume)
-    setIsMuted(newVolume === 0)
-    if (newVolume > 0 && isMuted) {
-      setIsMuted(false)
-    }
-  }
-
-  // Volume slider component
-  const VolumeSlider = () => (
-    <div className="relative group">
-      <input
-        type="range"
-        min="0"
-        max="1"
-        step="0.1"
-        value={volume}
-        onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-        className="w-16 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
-        style={{
-          background: `linear-gradient(to right, #f59e0b 0%, #f59e0b ${volume * 100}%, #4b5563 ${volume * 100}%, #4b5563 100%)`
-        }}
-      />
-      <style jsx>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          height: 12px;
-          width: 12px;
-          border-radius: 50%;
-          background: #f59e0b;
-          cursor: pointer;
-        }
-        .slider::-moz-range-thumb {
-          height: 12px;
-          width: 12px;
-          border-radius: 50%;
-          background: #f59e0b;
-          cursor: pointer;
-          border: none;
-        }
-      `}</style>
-    </div>
-  )
 
   // Get featured videos for homepage showcase
   const featuredVideos = videos.slice(0, 6) // First 6 videos as featured
@@ -201,15 +126,19 @@ export default function Home() {
   ]
 
   // Video preview data with actual content from scraped site
-  const videoPreviews = [
+  const videoPreviews: Video[] = [
     {
       id: '1',
       title: 'LIPOcel Animation',
       description: 'Comprehensive animation demonstrating LIPOcel technology',
       thumbnail: 'https://img.youtube.com/vi/jbWidiQOkgA/mqdefault.jpg',
       duration: '2:15',
-      views: '290',
-      category: 'Device Highlights'
+      views: 290,
+      category: 'Device Highlights',
+      videoUrl: null,
+      tags: ['lipocell', 'animation', 'device'],
+      instructor: null,
+      difficulty: 'Beginner'
     },
     {
       id: '2',
@@ -217,8 +146,12 @@ export default function Home() {
       description: 'Expert webinar hosted by Dr. Jeanine Downie',
       thumbnail: 'https://img.youtube.com/vi/blfoEQpoRHo/maxresdefault.jpg',
       duration: '45:30',
-      views: '427',
-      category: 'Webinars'
+      views: 427,
+      category: 'Webinars',
+      videoUrl: null,
+      tags: ['webinar', 'multifrax', 'Dr. Downie'],
+      instructor: 'Dr. Jeanine Downie',
+      difficulty: 'Intermediate'
     },
     {
       id: '3',
@@ -226,8 +159,12 @@ export default function Home() {
       description: 'Detailed walkthrough of ECHO interface',
       thumbnail: 'https://img.youtube.com/vi/xgMHgiiGRec/maxresdefault.jpg',
       duration: '5:15',
-      views: '189',
-      category: 'Device Training'
+      views: 189,
+      category: 'Device Training',
+      videoUrl: null,
+      tags: ['echo', 'GUI', 'interface'],
+      instructor: null,
+      difficulty: 'Beginner'
     },
     {
       id: '4',
@@ -235,35 +172,16 @@ export default function Home() {
       description: 'Comprehensive overview of ECHO device capabilities',
       thumbnail: 'https://img.youtube.com/vi/yiElNyuRtrc/maxresdefault.jpg',
       duration: '3:20',
-      views: '312',
-      category: 'Device Highlights'
+      views: 312,
+      category: 'Device Highlights',
+      videoUrl: null,
+      tags: ['quanta', 'echo', 'device'],
+      instructor: null,
+      difficulty: 'All Levels'
     }
   ]
 
-  // Keyboard shortcuts for video controls
-  React.useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (currentVideo) {
-        switch (event.key.toLowerCase()) {
-          case ' ':
-            event.preventDefault()
-            togglePlay(currentVideo)
-            break
-          case 'm':
-            event.preventDefault()
-            toggleMute()
-            break
-          case 'f':
-            event.preventDefault()
-            toggleFullscreen()
-            break
-        }
-      }
-    }
 
-    document.addEventListener('keydown', handleKeyPress)
-    return () => document.removeEventListener('keydown', handleKeyPress)
-  }, [currentVideo])
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -299,24 +217,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Notification System */}
-      {notification && (
-        <div className={`fixed top-20 right-4 z-50 px-4 py-2 rounded-lg shadow-lg transition-all duration-300 ${
-          notification.type === 'success' ? 'bg-green-500 text-white' :
-          notification.type === 'error' ? 'bg-red-500 text-white' :
-          'bg-blue-500 text-white'
-        }`}>
-          <div className="flex items-center space-x-2">
-            <span>{notification.message}</span>
-            <button 
-              onClick={() => setNotification(null)}
-              className="ml-2 hover:opacity-75"
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
+
 
       {/* Hero Section - Video-Centric like Vimeo */}
       <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 overflow-hidden">
@@ -385,15 +286,12 @@ export default function Home() {
                 {/* Video Preview Grid */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {videoPreviews.map((video) => (
-                    <div key={video.id} className="relative group cursor-pointer">
+                    <div 
+                      key={video.id} 
+                      className="relative group cursor-pointer"
+                      onClick={() => openVideo(video)}
+                    >
                       <div className="relative h-20 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded-lg overflow-hidden">
-                        {/* Now Playing Indicator */}
-                        {isPlaying === video.id && (
-                          <div className="absolute top-1 left-1 bg-amber-400 text-black px-1 py-0.5 rounded-full text-xs font-bold z-10 flex items-center space-x-1">
-                            <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
-                            <span>LIVE</span>
-                          </div>
-                        )}
                         
                         {/* Video Thumbnail - Now properly displayed */}
                         {video.thumbnail ? (
@@ -417,48 +315,10 @@ export default function Home() {
                           <Play className="w-6 h-6 text-amber-400 group-hover:scale-110 transition-transform" />
                         </div>
                         
-                        {/* Video Controls Overlay */}
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <div className="flex items-center space-x-2">
-                            <button 
-                              className="w-6 h-6 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                togglePlay(video.id)
-                              }}
-                            >
-                              {isPlaying === video.id ? (
-                                <Pause className="w-3 h-3 text-black" />
-                              ) : (
-                                <Play className="w-3 h-3 text-black" />
-                              )}
-                            </button>
-                            <button 
-                              className="w-5 h-5 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                toggleMute()
-                              }}
-                            >
-                              {isMuted ? (
-                                <VolumeX className="w-2.5 h-2.5 text-white" />
-                              ) : (
-                                <Volume2 className="w-2.5 h-2.5 text-white" />
-                              )}
-                            </button>
-                            <button 
-                              className="w-5 h-5 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                toggleFullscreen()
-                              }}
-                            >
-                              {isFullscreen ? (
-                                <Minimize2 className="w-2.5 h-2.5 text-white" />
-                              ) : (
-                                <Maximize2 className="w-2.5 h-2.5 text-white" />
-                              )}
-                            </button>
+                        {/* Play Overlay */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <div className="w-8 h-8 bg-amber-400/90 rounded-full flex items-center justify-center">
+                            <Play className="w-4 h-4 text-black ml-0.5" />
                           </div>
                         </div>
                         
@@ -526,18 +386,10 @@ export default function Home() {
               <div
                 key={video.id}
                 className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all cursor-pointer group"
-                onClick={() => router.push('/videos')}
+                onClick={() => openVideo(video)}
               >
                 {/* Enhanced Video Thumbnail */}
                 <div className="relative h-64">
-                  {/* Now Playing Indicator */}
-                  {isPlaying === video.id && (
-                    <div className="absolute top-3 left-3 bg-amber-400 text-black px-2 py-1 rounded-full text-xs font-bold z-10 flex items-center space-x-1">
-                      <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
-                      <span>LIVE</span>
-                    </div>
-                  )}
-                  
                   {/* Display actual thumbnail if available */}
                   {video.thumbnail ? (
                     <img 
@@ -560,74 +412,10 @@ export default function Home() {
                     <Play className="w-20 h-20 text-amber-400 group-hover:scale-110 transition-transform" />
                   </div>
                   
-                  {/* Video Controls Overlay */}
+                  {/* Play Overlay */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <div className="flex items-center space-x-3">
-                      <button 
-                        className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors relative group"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          togglePlay(video.id)
-                        }}
-                      >
-                        {isPlaying === video.id ? (
-                          <Pause className="w-6 h-6 text-black" />
-                        ) : (
-                          <Play className="w-6 h-6 text-black" />
-                        )}
-                        
-                        {/* Play/Pause Tooltip */}
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                          <div className="bg-black/90 text-white px-3 py-2 rounded-lg whitespace-nowrap text-sm">
-                            {isPlaying === video.id ? 'Pause (Spacebar)' : 'Play (Spacebar)'}
-                          </div>
-                          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90 mx-auto"></div>
-                        </div>
-                      </button>
-                      
-                      <button 
-                        className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors relative group"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          toggleMute()
-                        }}
-                      >
-                        {isMuted ? (
-                          <VolumeX className="w-4 h-4 text-white" />
-                        ) : (
-                          <Volume2 className="w-4 h-4 text-white" />
-                        )}
-                        
-                        {/* Volume Tooltip */}
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                          <div className="bg-black/90 text-white px-3 py-2 rounded-lg whitespace-nowrap text-sm">
-                            {isMuted ? 'Unmute (M)' : 'Mute (M)'}
-                          </div>
-                          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90 mx-auto"></div>
-                        </div>
-                      </button>
-                      
-                      <button 
-                        className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors relative group"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          toggleFullscreen()
-                        }}
-                      >
-                        {isFullscreen ? (
-                          <Minimize2 className="w-4 h-4 text-white" />
-                        ) : (
-                          <Maximize2 className="w-4 h-4 text-white" />
-                        )}
-                        
-                        {/* Fullscreen Tooltip */}
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                          <div className="bg-black/90 text-white px-3 py-2 rounded-lg whitespace-nowrap text-sm">
-                            {isFullscreen ? 'Exit Fullscreen (F)' : 'Fullscreen (F)'}
-                          </div>
-                          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90 mx-auto"></div>
-                        </div>
-                      </button>
+                    <div className="w-16 h-16 bg-amber-400/90 rounded-full flex items-center justify-center">
+                      <Play className="w-8 h-8 text-black ml-1" />
                     </div>
                   </div>
                   
@@ -1008,6 +796,13 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Video Player Modal */}
+      <VideoPlayer
+        video={selectedVideo}
+        isOpen={isPlayerOpen}
+        onClose={closeVideo}
+      />
     </div>
   )
 }

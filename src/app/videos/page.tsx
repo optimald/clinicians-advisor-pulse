@@ -26,13 +26,27 @@ import {
   Maximize2
 } from 'lucide-react'
 import { videos, categories, getVideosByCategory, searchVideos, getPaginatedVideos, type Video } from '@/data/videos'
+import VideoPlayer from '@/components/VideoPlayer'
 
 export default function VideosPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [currentPage, setCurrentPage] = useState(1)
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false)
   const [videosPerPage] = useState(12)
+
+  // Video player functions
+  const openVideo = (video: Video) => {
+    setSelectedVideo(video)
+    setIsPlayerOpen(true)
+  }
+
+  const closeVideo = () => {
+    setSelectedVideo(null)
+    setIsPlayerOpen(false)
+  }
 
   // Filter videos based on category and search
   const filteredVideos = videos.filter(video => {
@@ -241,9 +255,10 @@ export default function VideosPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className={`bg-black/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all group ${
+                    className={`bg-black/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all group cursor-pointer ${
                       viewMode === 'list' ? 'flex' : ''
                     }`}
+                    onClick={() => openVideo(video)}
                   >
                     {/* Thumbnail */}
                     <div className={`relative ${viewMode === 'list' ? 'w-48 h-32 flex-shrink-0' : 'h-48'}`}>
@@ -269,18 +284,10 @@ export default function VideosPage() {
                         <Play className="w-12 h-12 text-amber-400 group-hover:scale-110 transition-transform" />
                       </div>
                       
-                      {/* Video Controls Overlay */}
+                      {/* Play Overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <div className="flex items-center space-x-3">
-                          <button className="w-10 h-10 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
-                            <Play className="w-5 h-5 text-black" />
-                          </button>
-                          <button className="w-8 h-8 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                            <Volume2 className="w-4 h-4 text-white" />
-                          </button>
-                          <button className="w-8 h-8 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                            <Maximize2 className="w-4 h-4 text-white" />
-                          </button>
+                        <div className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center">
+                          <Play className="w-6 h-6 text-black ml-0.5" />
                         </div>
                       </div>
                       
@@ -403,6 +410,13 @@ export default function VideosPage() {
           </motion.button>
         </div>
       </section>
+
+      {/* Video Player Modal */}
+      <VideoPlayer
+        video={selectedVideo}
+        isOpen={isPlayerOpen}
+        onClose={closeVideo}
+      />
     </div>
   )
 }
