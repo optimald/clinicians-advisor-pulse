@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Play, Users, BookOpen, Award, Globe, Shield, BarChart3, MessageCircle, Zap, Star } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Play, Users, BookOpen, Award, Globe, Shield, BarChart3, MessageCircle, Zap, Star, Download } from 'lucide-react'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 interface Slide {
   id: number
@@ -228,8 +230,9 @@ const slides: Slide[] = [
   }
 ]
 
-export default function Home() {
+export default function ConceptPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isExporting, setIsExporting] = useState(false)
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length)
@@ -243,8 +246,129 @@ export default function Home() {
     setCurrentSlide(index)
   }
 
+  const exportToPDF = async () => {
+    setIsExporting(true)
+    
+    try {
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      const slideElement = document.getElementById('slide-content')
+      
+      if (!slideElement) {
+        throw new Error('Slide content not found')
+      }
+
+      // Set PDF metadata
+      pdf.setProperties({
+        title: 'CliniciansAdvisor Platform Concept',
+        subject: 'Medical Aesthetics Learning Platform Overview',
+        author: 'CliniciansAdvisor Team',
+        creator: 'CliniciansAdvisor Platform'
+      })
+
+      // Add title page
+      pdf.setFontSize(24)
+      pdf.setTextColor(59, 130, 246) // Blue color
+      pdf.text('CliniciansAdvisor Platform Concept', 105, 40, { align: 'center' })
+      
+      pdf.setFontSize(16)
+      pdf.setTextColor(107, 114, 128) // Gray color
+      pdf.text('Medical Aesthetics Learning Platform Overview', 105, 55, { align: 'center' })
+      
+      pdf.setFontSize(12)
+      pdf.setTextColor(156, 163, 175)
+      pdf.text(`Generated on ${new Date().toLocaleDateString()}`, 105, 70, { align: 'center' })
+      
+      pdf.setFontSize(14)
+      pdf.setTextColor(75, 85, 99)
+      pdf.text('Table of Contents:', 20, 90)
+      
+      slides.forEach((slide, index) => {
+        const yPos = 100 + (index * 8)
+        if (yPos < 280) { // Check if we have space on this page
+          pdf.setFontSize(12)
+          pdf.setTextColor(59, 130, 246)
+          pdf.text(`${index + 1}.`, 20, yPos)
+          pdf.setTextColor(75, 85, 99)
+          pdf.text(slide.title, 30, yPos)
+        }
+      })
+
+      // Add each slide as a new page
+      for (let i = 0; i < slides.length; i++) {
+        if (i > 0) {
+          pdf.addPage()
+        }
+        
+        const slide = slides[i]
+        
+        // Slide title
+        pdf.setFontSize(20)
+        pdf.setTextColor(59, 130, 246)
+        pdf.text(slide.title, 20, 30)
+        
+        // Slide subtitle
+        pdf.setFontSize(16)
+        pdf.setTextColor(107, 114, 128)
+        pdf.text(slide.subtitle, 20, 45)
+        
+        // Slide description
+        pdf.setFontSize(12)
+        pdf.setTextColor(75, 85, 99)
+        const descriptionLines = pdf.splitTextToSize(slide.description, 170)
+        pdf.text(descriptionLines, 20, 65)
+        
+        // Slide features
+        pdf.setFontSize(14)
+        pdf.setTextColor(59, 130, 246)
+        pdf.text('Key Features:', 20, 100)
+        
+        slide.features.forEach((feature, index) => {
+          const yPos = 115 + (index * 8)
+          pdf.setFontSize(11)
+          pdf.setTextColor(75, 85, 99)
+          pdf.text(`• ${feature}`, 25, yPos)
+        })
+        
+        // Page number
+        pdf.setFontSize(10)
+        pdf.setTextColor(156, 163, 175)
+        pdf.text(`Page ${i + 2} of ${slides.length + 1}`, 105, 280, { align: 'center' })
+      }
+
+      // Save the PDF
+      pdf.save('CliniciansAdvisor-Platform-Concept.pdf')
+      
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Error generating PDF. Please try again.')
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Header with Export Button */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <Star className="w-8 h-8 text-yellow-500" />
+              <h1 className="text-xl font-bold text-gray-900">CliniciansAdvisor Platform Concept</h1>
+            </div>
+            
+            <button
+              onClick={exportToPDF}
+              disabled={isExporting}
+              className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 text-white rounded-lg transition-all font-medium"
+            >
+              <Download className="w-4 h-4" />
+              <span>{isExporting ? 'Generating PDF...' : 'Export PDF'}</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="max-w-6xl w-full">
@@ -256,6 +380,7 @@ export default function Home() {
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.5 }}
               className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+              id="slide-content"
             >
               {/* Slide Content */}
               <div className="p-8 md:p-12">
