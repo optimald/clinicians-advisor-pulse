@@ -32,199 +32,199 @@ const slides: Slide[] = [
   },
   {
     id: 2,
-    title: "Creator Onboarding & Verification",
-    subtitle: "Building Trust Through Rigorous Standards",
-    description: "Every expert is manually verified to ensure a safe, professional, and credible environment.",
+    title: "Content Discovery & Search",
+    subtitle: "AI-Powered Learning Recommendations",
+    description: "Advanced search and discovery system that helps learners find relevant content through intelligent categorization and personalized recommendations.",
     features: [
-      "Multi-step credential verification",
-      "Document upload & review",
-      "Admin approval process",
-      "Guided setup wizard"
+      "AI-Powered Content Recommendations",
+      "Advanced Search & Filtering",
+      "Smart Categorization & Tagging",
+      "Trending & Popular Content"
     ],
-    icon: <Shield className="w-16 h-16 text-green-500" />,
-    color: "from-green-600 to-blue-600"
+    icon: <BookOpen className="w-16 h-16 text-blue-500" />,
+    color: "from-blue-500 to-cyan-500"
   },
   {
     id: 3,
-    title: "Content Studio & Course Builder",
-    subtitle: "Powerful Tools for Content Creation",
-    description: "An intuitive, all-in-one toolkit that removes technical barriers and allows creators to focus on high-value content.",
+    title: "Assessment & Certification",
+    subtitle: "Multi-Tiered Learning Validation",
+    description: "Comprehensive assessment system with skill validation, accreditation integration, and adaptive learning paths for continuous professional development.",
     features: [
-      "Drag & drop course builder",
-      "Multi-format content support",
-      "Live studio capabilities",
-      "Content library management"
+      "Multi-Tiered Assessments",
+      "Skill Validation & Testing",
+      "Accreditation & CEU Integration",
+      "Adaptive Learning Paths"
     ],
-    icon: <BookOpen className="w-16 h-16 text-purple-500" />,
-    color: "from-purple-600 to-pink-600"
+    icon: <Award className="w-16 h-16 text-green-500" />,
+    color: "from-green-500 to-emerald-500"
   },
   {
     id: 4,
-    title: "AI-Powered Discovery Engine",
-    subtitle: "Intelligent Content Recommendations",
-    description: "Advanced search and filtering with personalized recommendations based on user behavior and preferences.",
+    title: "Live Learning & Interactive Features",
+    subtitle: "Real-Time Collaborative Learning",
+    description: "Interactive live sessions with Q&A, polls, breakout rooms, and comprehensive session management for engaging learning experiences.",
     features: [
-      "Natural language search",
-      "Faceted filtering system",
-      "Personalized recommendations",
-      "Trending content discovery"
+      "Moderated Q&A Sessions",
+      "Live Polls & Surveys",
+      "Breakout Rooms & Groups",
+      "Session Management Tools"
     ],
-    icon: <Zap className="w-16 h-16 text-yellow-500" />,
-    color: "from-yellow-600 to-orange-600"
+    icon: <Play className="w-16 h-16 text-red-500" />,
+    color: "from-red-500 to-pink-500"
   },
   {
     id: 5,
-    title: "Assessment & Certification System",
-    subtitle: "Comprehensive Learning Validation",
-    description: "Multi-tiered assessment framework with skill validation and professional accreditation integration.",
+    title: "Content Quality & Review Process",
+    subtitle: "Maintaining Educational Excellence",
+    description: "Rigorous content review system with peer validation, versioning, and continuous improvement to ensure the highest quality standards.",
     features: [
-      "Knowledge check quizzes",
-      "Case study applications",
-      "Practical demonstrations",
-      "CME/CEU credit tracking"
+      "Content Standards & Guidelines",
+      "Admin & Peer Review System",
+      "Versioning & Update Management",
+      "Quality Metrics & Analytics"
     ],
-    icon: <Award className="w-16 h-16 text-blue-500" />,
-    color: "from-blue-600 to-indigo-600"
+    icon: <Shield className="w-16 h-16 text-indigo-500" />,
+    color: "from-indigo-500 to-purple-500"
   },
   {
     id: 6,
-    title: "Live Learning & Interactive Features",
-    subtitle: "Real-Time Engagement & Collaboration",
-    description: "Fully interactive environment for real-time learning with advanced session management.",
+    title: "Mobile Experience & Offline Access",
+    subtitle: "Learning Anywhere, Anytime",
+    description: "Native mobile applications with offline content access, mobile-optimized analytics, and seamless cross-device synchronization.",
     features: [
-      "Live Q&A with upvoting",
-      "Real-time polls & surveys",
-      "Breakout room sessions",
-      "Automatic recording & transcription"
+      "Native iOS & Android Apps",
+      "Offline Content Download",
+      "Mobile-Optimized Analytics",
+      "Cross-Device Synchronization"
     ],
-    icon: <Play className="w-16 h-16 text-red-500" />,
-    color: "from-red-600 to-pink-600"
+    icon: <Globe className="w-16 h-16 text-teal-500" />,
+    color: "from-teal-500 to-blue-500"
   },
   {
     id: 7,
-    title: "Content Quality & Review Process",
-    subtitle: "Maintaining Excellence Through Multi-Layer Review",
-    description: "Ensuring all content meets the highest standards of medical accuracy and professional quality.",
+    title: "Analytics & Learning Progress",
+    subtitle: "Data-Driven Learning Insights",
+    description: "Comprehensive analytics for both learners and creators, with learning path recommendations and progress tracking for optimal outcomes.",
     features: [
-      "Admin review process",
-      "Peer review system",
-      "Content standards enforcement",
-      "Version control & updates"
+      "Learner Progress Analytics",
+      "Creator Performance Metrics",
+      "Learning Path Recommendations",
+      "Achievement Tracking"
     ],
-    icon: <Shield className="w-16 h-16 text-emerald-500" />,
-    color: "from-emerald-600 to-teal-600"
+    icon: <BarChart3 className="w-16 h-16 text-purple-500" />,
+    color: "from-purple-500 to-pink-500"
   },
   {
     id: 8,
-    title: "Mobile Experience & Offline Access",
-    subtitle: "Learning Anywhere, Anytime",
-    description: "Seamless mobile experience with offline capabilities for learning on the go.",
+    title: "Community Features & Networking",
+    subtitle: "Building Professional Relationships",
+    description: "Comprehensive community tools including forums, direct messaging, member directory, and knowledge sharing for professional networking.",
     features: [
-      "Native iOS & Android apps",
-      "Offline content download",
-      "Mobile-optimized UI",
-      "Cross-device synchronization"
+      "Professional Forums & Discussions",
+      "Direct Messaging System",
+      "Member Directory & Profiles",
+      "Knowledge Sharing Platform"
     ],
-    icon: <Globe className="w-16 h-16 text-indigo-500" />,
-    color: "from-indigo-600 to-purple-600"
+    icon: <Users className="w-16 h-16 text-orange-500" />,
+    color: "from-orange-500 to-red-500"
   },
   {
     id: 9,
-    title: "Analytics & Progress Tracking",
-    subtitle: "Data-Driven Learning Insights",
-    description: "Comprehensive analytics for both learners and creators to track progress and optimize performance.",
+    title: "Internationalization & Localization",
+    subtitle: "Global Medical Education",
+    description: "Multi-language support with regional compliance, cultural adaptation, and localized content for international medical professionals.",
     features: [
-      "Personal learning dashboard",
-      "Skill competency mapping",
-      "Content performance metrics",
-      "Audience insights & demographics"
+      "Multi-Language Support",
+      "Regional Compliance & Standards",
+      "Cultural Adaptation & Localization",
+      "International Content Partnerships"
     ],
-    icon: <BarChart3 className="w-16 h-16 text-cyan-500" />,
-    color: "from-cyan-600 to-blue-600"
+    icon: <Globe className="w-16 h-16 text-cyan-500" />,
+    color: "from-cyan-500 to-blue-500"
   },
   {
     id: 10,
-    title: "Community & Networking",
-    subtitle: "Building Professional Relationships",
-    description: "Vibrant professional network fostering collaboration, mentorship, and knowledge sharing.",
+    title: "Integration & API Capabilities",
+    subtitle: "Seamless System Connectivity",
+    description: "Comprehensive API ecosystem with third-party integrations, data export capabilities, and medical device integration for enhanced functionality.",
     features: [
-      "Creator-led forums",
-      "Direct messaging system",
-      "Peer connection tools",
-      "Virtual networking events"
+      "Third-Party System Integration",
+      "RESTful API & Webhooks",
+      "Data Export & Import Tools",
+      "Medical Device Integration"
     ],
-    icon: <Users className="w-16 h-16 text-pink-500" />,
-    color: "from-pink-600 to-rose-600"
+    icon: <Zap className="w-16 h-16 text-yellow-500" />,
+    color: "from-yellow-500 to-orange-500"
   },
   {
     id: 11,
-    title: "Internationalization & Compliance",
-    subtitle: "Global Accessibility & Regional Standards",
-    description: "Multi-language support with regional compliance for international medical practice standards.",
+    title: "Scalability & Performance",
+    subtitle: "Enterprise-Grade Infrastructure",
+    description: "Cloud-native architecture with CDN optimization, content management systems, and performance monitoring for reliable, scalable operations.",
     features: [
-      "Multi-language UI support",
-      "Regional compliance features",
-      "Cultural adaptation tools",
-      "International payment methods"
+      "Cloud-Native Architecture",
+      "CDN & Edge Optimization",
+      "Content Storage & Management",
+      "Performance Monitoring"
     ],
-    icon: <Globe className="w-16 h-16 text-teal-500" />,
-    color: "from-teal-600 to-green-600"
+    icon: <Zap className="w-16 h-16 text-green-500" />,
+    color: "from-green-500 to-teal-500"
   },
   {
     id: 12,
-    title: "Integration & API Capabilities",
-    subtitle: "Seamless Ecosystem Integration",
-    description: "Comprehensive API access and third-party integrations for enterprise customers and medical systems.",
+    title: "Security & Compliance",
+    subtitle: "HIPAA & Medical Data Protection",
+    description: "Enterprise-grade security with HIPAA compliance, data encryption, privacy controls, and audit trails for medical data protection.",
     features: [
-      "RESTful API access",
-      "Practice management integration",
-      "Medical device databases",
-      "Data export capabilities"
+      "HIPAA Compliance & Security",
+      "Data Encryption & Protection",
+      "Privacy Controls & Consent",
+      "Audit Trails & Monitoring"
     ],
-    icon: <Zap className="w-16 h-16 text-violet-500" />,
-    color: "from-violet-600 to-purple-600"
+    icon: <Shield className="w-16 h-16 text-red-500" />,
+    color: "from-red-500 to-orange-500"
   },
   {
     id: 13,
-    title: "Monetization & Business Model",
-    subtitle: "Sustainable Revenue for Creators",
-    description: "Flexible pricing models with transparent revenue sharing to reward creators for their expertise.",
+    title: "Customer Support & Success",
+    subtitle: "Dedicated Professional Support",
+    description: "Multi-channel support system with onboarding assistance, training programs, and success management for optimal user experience.",
     features: [
-      "Subscription tier system",
-      "Pay-per-view options",
-      "70/30 revenue sharing",
-      "Performance-based bonuses"
+      "Multi-Channel Support System",
+      "Onboarding & Training Programs",
+      "Success Management & Optimization",
+      "Professional Development Resources"
     ],
-    icon: <Star className="w-16 h-16 text-amber-500" />,
-    color: "from-amber-600 to-orange-600"
+    icon: <MessageCircle className="w-16 h-16 text-blue-500" />,
+    color: "from-blue-500 to-indigo-500"
   },
   {
     id: 14,
-    title: "Security & Compliance",
-    subtitle: "Enterprise-Grade Protection",
-    description: "Highest standards of security and medical data compliance with regular audits and testing.",
+    title: "Monetization & Business Model",
+    subtitle: "Sustainable Revenue Generation",
+    description: "Flexible pricing models with creator revenue sharing, subscription tiers, and enterprise solutions for sustainable platform growth.",
     features: [
-      "End-to-end encryption",
-      "HIPAA compliance",
-      "Regular security audits",
-      "Privacy controls & GDPR"
+      "Flexible Pricing Models",
+      "Creator Revenue Sharing",
+      "Subscription Tiers & Plans",
+      "Enterprise Solutions"
     ],
-    icon: <Shield className="w-16 h-16 text-emerald-500" />,
-    color: "from-emerald-600 to-green-600"
+    icon: <BarChart3 className="w-16 h-16 text-emerald-500" />,
+    color: "from-emerald-500 to-green-500"
   },
   {
     id: 15,
-    title: "Ready to Transform Medical Education?",
-    subtitle: "Join the CliniciansAdvisor Revolution",
-    description: "Be part of the platform that's redefining how medical aesthetics professionals learn, grow, and succeed.",
+    title: "Future Roadmap & Innovation",
+    subtitle: "Leading Edge Technology",
+    description: "Cutting-edge innovations including VR/AR experiences, AI-generated content, blockchain integration, and industry partnerships for future growth.",
     features: [
-      "Start your creator journey today",
-      "Join the learning community",
-      "Access world-class education",
-      "Build your professional brand"
+      "VR/AR Learning Experiences",
+      "AI-Generated Content & Tools",
+      "Blockchain & Credentialing",
+      "Industry Partnerships & Innovation"
     ],
-    icon: <Zap className="w-16 h-16 text-blue-500" />,
-    color: "from-blue-600 to-purple-600"
+    icon: <Star className="w-16 h-16 text-purple-500" />,
+    color: "from-purple-600 to-pink-600"
   }
 ]
 
@@ -246,7 +246,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center p-4 pt-8">
+      <main className="flex-1 flex items-center justify-center p-4">
         <div className="max-w-6xl w-full">
           <AnimatePresence mode="wait">
             <motion.div
@@ -257,69 +257,70 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="bg-white rounded-3xl shadow-2xl overflow-hidden"
             >
-              <div className={`bg-gradient-to-r ${slides[currentSlide].color} p-8 text-white`}>
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-4 mb-4">
-                      {slides[currentSlide].icon}
-                      <div>
-                        <h2 className="text-4xl font-bold mb-2">{slides[currentSlide].title}</h2>
-                        <p className="text-xl opacity-90">{slides[currentSlide].subtitle}</p>
-                      </div>
-                    </div>
+              {/* Slide Content */}
+              <div className="p-8 md:p-12">
+                <div className="text-center mb-8">
+                  <div className="flex justify-center mb-4">
+                    {slides[currentSlide].icon}
                   </div>
+                  <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                    {slides[currentSlide].title}
+                  </h1>
+                  <p className="text-xl text-gray-600 mb-4">
+                    {slides[currentSlide].subtitle}
+                  </p>
+                  <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+                    {slides[currentSlide].description}
+                  </p>
                 </div>
-              </div>
 
-              <div className="p-8">
-                <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                  {slides[currentSlide].description}
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {/* Features Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                   {slides[currentSlide].features.map((feature, index) => (
-                    <motion.div
+                    <div
                       key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-start space-x-3 p-4 bg-gray-50 rounded-xl"
+                      className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg"
                     >
-                      <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-700 font-medium">{feature}</span>
-                    </motion.div>
+                      <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                      <span className="text-gray-700">{feature}</span>
+                    </div>
                   ))}
                 </div>
 
-                {/* Navigation */}
-                <div className="flex items-center justify-between">
+                {/* Slide Navigation */}
+                <div className="flex justify-center space-x-2 mb-8">
+                  {slides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-colors ${
+                        index === currentSlide
+                          ? 'bg-gradient-to-r from-blue-500 to-purple-500'
+                          : 'bg-gray-300 hover:bg-gray-400'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* Navigation Buttons */}
+                <div className="flex justify-between items-center">
                   <button
                     onClick={prevSlide}
-                    className="flex items-center space-x-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
+                    className="flex items-center space-x-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
                   >
                     <ChevronLeft className="w-5 h-5" />
                     <span>Previous</span>
                   </button>
 
-                  <div className="flex space-x-2">
-                    {slides.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => goToSlide(index)}
-                        className={`w-3 h-3 rounded-full transition-colors ${
-                          index === currentSlide
-                            ? 'bg-gradient-to-r from-blue-500 to-purple-500'
-                            : 'bg-gray-300 hover:bg-gray-400'
-                        }`}
-                      />
-                    ))}
+                  <div className="text-sm text-gray-500">
+                    {currentSlide + 1} of {slides.length}
                   </div>
 
                   <button
                     onClick={nextSlide}
-                    className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all"
+                    className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-colors"
                   >
-                    <span>{currentSlide === slides.length - 1 ? 'Start Over' : 'Next'}</span>
+                    <span>Next</span>
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
@@ -328,16 +329,6 @@ export default function Home() {
           </AnimatePresence>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md border-t border-gray-200 mt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-gray-600">
-            <p>© 2025 CliniciansAdvisor. All rights reserved.</p>
-            <p className="text-sm mt-2">Transforming medical aesthetics education through technology and community.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
