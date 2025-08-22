@@ -66,8 +66,14 @@ export default function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps
       // Auto-play the video when modal opens
       const timer = setTimeout(() => {
         if (videoRef.current) {
-          videoRef.current.play()
-          setIsPlaying(true)
+          if (video.thumbnail?.includes('youtube.com')) {
+            // YouTube videos autoplay via iframe src
+            setIsPlaying(true)
+          } else {
+            // Regular video elements
+            videoRef.current.play()
+            setIsPlaying(true)
+          }
         }
       }, 100) // Small delay to ensure video element is ready
       
@@ -258,6 +264,12 @@ export default function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps
     return `${minutes}:${seconds.toString().padStart(2, '0')}`
   }
 
+  // Extract YouTube video ID from thumbnail URL
+  const extractYouTubeId = (thumbnailUrl: string): string => {
+    const match = thumbnailUrl.match(/vi\/([a-zA-Z0-9_-]+)/)
+    return match ? match[1] : ''
+  }
+
   const handleMouseMove = () => {
     setShowControls(true)
     if (controlsTimeoutRef.current) {
@@ -312,22 +324,39 @@ export default function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps
         )}
 
         {/* Video Element */}
-        <video
-          ref={videoRef}
-          className="w-full h-full object-contain"
-          poster={video.thumbnail}
-          onTimeUpdate={handleTimeUpdate}
-          onLoadedMetadata={handleLoadedMetadata}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          onClick={togglePlay}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* Demo video source - replace with actual video URLs */}
-          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {video.thumbnail && video.thumbnail.includes('youtube.com') ? (
+          // YouTube video - extract ID and create embed URL
+          <iframe
+            ref={videoRef as any}
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${extractYouTubeId(video.thumbnail)}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1`}
+            title={video.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          // Regular video element for other video sources
+          <video
+            ref={videoRef}
+            className="w-full h-full object-contain"
+            poster={video.thumbnail}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onClick={togglePlay}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {video.videoUrl ? (
+              <source src={video.videoUrl} type="video/mp4" />
+            ) : (
+              <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+            )}
+            Your browser does not support the video tag.
+          </video>
+        )}
 
         {/* Video Info Overlay */}
         <div className={`absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg p-4 transition-all ${
@@ -349,8 +378,8 @@ export default function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps
           </div>
         </div>
 
-        {/* Center Play Button */}
-        {!isPlaying && (
+        {/* Center Play Button - Only show for non-YouTube videos */}
+        {!isPlaying && !video.thumbnail?.includes('youtube.com') && (
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={togglePlay}
@@ -363,10 +392,11 @@ export default function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps
           </div>
         )}
 
-        {/* Video Controls */}
-        <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent transition-all ${
-          showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
-        } ${isMobile ? 'p-4' : 'p-6'}`}>
+        {/* Video Controls - Only show for non-YouTube videos */}
+        {!video.thumbnail?.includes('youtube.com') && (
+          <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent transition-all ${
+            showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
+          } ${isMobile ? 'p-4' : 'p-6'}`}>
           {/* Progress Bar */}
           <div className="mb-4">
             <input
@@ -506,6 +536,7 @@ export default function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps
             )}
           </div>
         </div>
+        )}
       </div>
     </div>
   )
