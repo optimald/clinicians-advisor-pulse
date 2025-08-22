@@ -25,12 +25,22 @@ export default function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps
   const playerRef = useRef<HTMLDivElement>(null)
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Reset player state when video changes
+  // Reset player state when video changes and auto-play
   useEffect(() => {
     if (video) {
       setIsPlaying(false)
       setCurrentTime(0)
       setDuration(0)
+      
+      // Auto-play the video when modal opens
+      const timer = setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play()
+          setIsPlaying(true)
+        }
+      }, 100) // Small delay to ensure video element is ready
+      
+      return () => clearTimeout(timer)
     }
   }, [video])
 
