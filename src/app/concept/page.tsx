@@ -251,12 +251,7 @@ export default function ConceptPage() {
     
     try {
       const pdf = new jsPDF('p', 'mm', 'a4')
-      const slideElement = document.getElementById('slide-content')
       
-      if (!slideElement) {
-        throw new Error('Slide content not found')
-      }
-
       // Set PDF metadata
       pdf.setProperties({
         title: 'CliniciansAdvisor Platform Concept',
@@ -293,50 +288,114 @@ export default function ConceptPage() {
         }
       })
 
-      // Add each slide as a new page
+      // Capture each slide visually and add to PDF
       for (let i = 0; i < slides.length; i++) {
+        // Navigate to the slide
+        setCurrentSlide(i)
+        
+        // Wait for the slide to render
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        // Capture the slide content
+        const slideElement = document.getElementById('slide-content')
+        if (!slideElement) {
+          throw new Error('Slide content not found')
+        }
+
+        // Add new page for each slide (except first one which is title page)
         if (i > 0) {
           pdf.addPage()
         }
-        
-        const slide = slides[i]
-        
-        // Slide title
-        pdf.setFontSize(20)
-        pdf.setTextColor(59, 130, 246)
-        pdf.text(slide.title, 20, 30)
-        
-        // Slide subtitle
-        pdf.setFontSize(16)
-        pdf.setTextColor(107, 114, 128)
-        pdf.text(slide.subtitle, 20, 45)
-        
-        // Slide description
-        pdf.setFontSize(12)
-        pdf.setTextColor(75, 85, 99)
-        const descriptionLines = pdf.splitTextToSize(slide.description, 170)
-        pdf.text(descriptionLines, 20, 65)
-        
-        // Slide features
-        pdf.setFontSize(14)
-        pdf.setTextColor(59, 130, 246)
-        pdf.text('Key Features:', 20, 100)
-        
-        slide.features.forEach((feature, index) => {
-          const yPos = 115 + (index * 8)
-          pdf.setFontSize(11)
+
+        try {
+          // Capture the slide as an image
+          const canvas = await html2canvas(slideElement, {
+            scale: 2, // Higher resolution
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff',
+            width: slideElement.scrollWidth,
+            height: slideElement.scrollHeight
+          })
+
+          // Convert canvas to image
+          const imgData = canvas.toDataURL('image/png')
+          
+          // Calculate dimensions to fit on A4 page
+          const pageWidth = pdf.internal.pageSize.getWidth()
+          const pageHeight = pdf.internal.pageSize.getHeight()
+          const margin = 10
+          const maxWidth = pageWidth - (2 * margin)
+          const maxHeight = pageHeight - (2 * margin)
+          
+          // Calculate scaling to fit the image on the page
+          const imgWidth = canvas.width
+          const imgHeight = canvas.height
+          const scaleX = maxWidth / imgWidth
+          const scaleY = maxHeight / imgHeight
+          const scale = Math.min(scaleX, scaleY)
+          
+          const finalWidth = imgWidth * scale
+          const finalHeight = imgHeight * scale
+          
+          // Center the image on the page
+          const x = (pageWidth - finalWidth) / 2
+          const y = (pageHeight - finalHeight) / 2
+          
+          // Add the slide image to PDF
+          pdf.addImage(imgData, 'PNG', x, y, finalWidth, finalHeight)
+          
+          // Add page number
+          pdf.setFontSize(10)
+          pdf.setTextColor(156, 163, 175)
+          pdf.text(`Page ${i + 2} of ${slides.length + 1}`, 105, pageHeight - 10, { align: 'center' })
+          
+        } catch (error) {
+          console.error(`Error capturing slide ${i + 1}:`, error)
+          
+          // Fallback to text-based content if image capture fails
+          const slide = slides[i]
+          
+          // Slide title
+          pdf.setFontSize(20)
+          pdf.setTextColor(59, 130, 246)
+          pdf.text(slide.title, 20, 30)
+          
+          // Slide subtitle
+          pdf.setFontSize(16)
+          pdf.setTextColor(107, 114, 128)
+          pdf.text(slide.subtitle, 20, 45)
+          
+          // Slide description
+          pdf.setFontSize(12)
           pdf.setTextColor(75, 85, 99)
-          pdf.text(`• ${feature}`, 25, yPos)
-        })
-        
-        // Page number
-        pdf.setFontSize(10)
-        pdf.setTextColor(156, 163, 175)
-        pdf.text(`Page ${i + 2} of ${slides.length + 1}`, 105, 280, { align: 'center' })
+          const descriptionLines = pdf.splitTextToSize(slide.description, 170)
+          pdf.text(descriptionLines, 20, 65)
+          
+          // Slide features
+          pdf.setFontSize(14)
+          pdf.setTextColor(59, 130, 246)
+          pdf.text('Key Features:', 20, 100)
+          
+          slide.features.forEach((feature, index) => {
+            const yPos = 115 + (index * 8)
+            pdf.setFontSize(11)
+            pdf.setTextColor(75, 85, 99)
+            pdf.text(`• ${feature}`, 25, yPos)
+          })
+          
+          // Page number
+          pdf.setFontSize(10)
+          pdf.setTextColor(156, 163, 175)
+          pdf.text(`Page ${i + 2} of ${slides.length + 1}`, 105, 280, { align: 'center' })
+        }
       }
 
       // Save the PDF
       pdf.save('CliniciansAdvisor-Platform-Concept.pdf')
+      
+      // Return to the original slide
+      setCurrentSlide(0)
       
     } catch (error) {
       console.error('Error generating PDF:', error)
