@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2 } from 'lucide-react'
 import { videos, categories, Video } from '@/data/videos'
 import VideoPlayer from '@/components/VideoPlayer'
@@ -221,40 +221,95 @@ export default function Home() {
 
       {/* Hero Section - Video-Centric like Vimeo */}
       <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 overflow-hidden">
-        {/* Background Elements */}
+        {/* Background Elements with 3D Effects */}
         <div className="absolute inset-0 bg-gradient-to-r from-amber-400/5 to-purple-500/5"></div>
-        <div className="absolute top-0 left-0 w-96 h-96 bg-amber-400/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+        <motion.div 
+          className="absolute top-0 left-0 w-96 h-96 bg-amber-400/5 rounded-full blur-3xl"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
+          animate={{
+            y: [0, 20, 0],
+            x: [0, -10, 0],
+            scale: [1, 0.9, 1]
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+              <motion.h1 
+                className="text-6xl md:text-7xl font-bold mb-6 leading-tight"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: 2
+                }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 ADVANCE YOUR<br />
-                <span className="text-amber-400">MEDICAL AESTHETICS</span><br />
+                <motion.span 
+                  className="text-amber-400"
+                  whileHover={{ 
+                    scale: 1.05,
+                    textShadow: "0 0 30px rgba(245, 158, 11, 0.5)"
+                  }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  MEDICAL AESTHETICS
+                </motion.span><br />
                 CAREER
-              </h1>
+              </motion.h1>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
                 Join the definitive digital ecosystem where verified medical aesthetics professionals can build their expertise, 
                 earn certifications, and cultivate a professional community that drives patient outcomes and career growth.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <button
+                <motion.button
                   onClick={() => router.push('/videos')}
-                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-black rounded-lg transition-all font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-black rounded-lg font-bold text-lg shadow-lg"
+                  whileHover={{ 
+                    scale: 1.05,
+                    rotateY: 5,
+                    boxShadow: "0 20px 40px rgba(245, 158, 11, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Play className="w-6 h-6" />
                   <span>START LEARNING</span>
                   <ArrowRight className="w-5 h-5" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={() => router.push('/videos')}
-                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black rounded-lg transition-all font-bold text-lg"
+                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black rounded-lg font-bold text-lg"
+                  whileHover={{ 
+                    scale: 1.05,
+                    rotateY: -5,
+                    borderColor: "#f59e0b",
+                    boxShadow: "0 10px 30px rgba(245, 158, 11, 0.2)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                 >
                   <BookOpen className="w-6 h-6" />
                   <span>Watch Demo</span>
-                </button>
+                </motion.button>
               </div>
 
               {/* Trust Indicators */}
@@ -286,10 +341,17 @@ export default function Home() {
                 {/* Video Preview Grid */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {videoPreviews.map((video) => (
-                    <div 
+                    <motion.div 
                       key={video.id} 
                       className="relative group cursor-pointer"
                       onClick={() => openVideo(video)}
+                      whileHover={{ 
+                        scale: 1.05,
+                        rotateY: 5,
+                        z: 50
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 300 }}
                     >
                       <div className="relative h-20 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded-lg overflow-hidden">
                         
@@ -337,7 +399,7 @@ export default function Home() {
                           {video.category} • {video.views} views
                         </p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
 
@@ -383,10 +445,18 @@ export default function Home() {
           {/* Featured Videos Grid - Larger, More Prominent */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {featuredVideos.map((video) => (
-              <div
+              <motion.div
                 key={video.id}
-                className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all cursor-pointer group"
+                className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 cursor-pointer group"
                 onClick={() => openVideo(video)}
+                whileHover={{ 
+                  scale: 1.03,
+                  rotateY: 3,
+                  z: 30,
+                  borderColor: "#f59e0b"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
                 {/* Enhanced Video Thumbnail */}
                 <div className="relative h-64">
@@ -469,7 +539,7 @@ export default function Home() {
                     <ChevronRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
