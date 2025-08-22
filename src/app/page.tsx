@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp } from 'lucide-react'
+import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings } from 'lucide-react'
 import { videos, categories } from '@/data/videos'
 
 export default function Home() {
@@ -105,6 +105,37 @@ export default function Home() {
     }
   ]
 
+  // Video preview data with actual content
+  const videoPreviews = [
+    {
+      id: '1',
+      title: 'ECHO Treatment Protocols',
+      description: 'Advanced training for medical professionals',
+      thumbnail: '/api/placeholder/400/225/amber/white?text=ECHO+Treatment',
+      duration: '8:45',
+      views: '2.4K',
+      category: 'Device Training'
+    },
+    {
+      id: '2',
+      title: 'Botox Injection Techniques',
+      description: 'Master the latest injection methods',
+      thumbnail: '/api/placeholder/400/225/blue/white?text=Botox+Techniques',
+      duration: '12:30',
+      views: '1.8K',
+      category: 'Injectables'
+    },
+    {
+      id: '3',
+      title: 'Laser Safety Protocols',
+      description: 'Essential safety guidelines for laser treatments',
+      thumbnail: '/api/placeholder/400/225/purple/white?text=Laser+Safety',
+      duration: '15:20',
+      views: '3.1K',
+      category: 'Laser & Energy'
+    }
+  ]
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
@@ -139,7 +170,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section - Video-Centric like Vimeo */}
       <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-r from-amber-400/5 to-purple-500/5"></div>
@@ -150,9 +181,9 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
-                ADVANCE YOUR<br />
-                <span className="text-amber-400">MEDICAL AESTHETICS</span><br />
-                CAREER
+                YOUR VIDEOS,<br />
+                <span className="text-amber-400">YOUR WAY</span><br />
+                IN MEDICAL AESTHETICS
               </h1>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
                 Join the definitive digital ecosystem where verified medical aesthetics professionals can build their expertise, 
@@ -173,43 +204,85 @@ export default function Home() {
                   className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black rounded-lg transition-all font-bold text-lg"
                 >
                   <BookOpen className="w-6 h-6" />
-                  <span>View Courses</span>
+                  <span>Watch Demo</span>
                 </button>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="flex items-center space-x-6 text-sm text-gray-400">
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-5 h-5 text-amber-400" />
+                  <span>201+ Training Videos</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-5 h-5 text-amber-400" />
+                  <span>Expert Instructors</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-5 h-5 text-amber-400" />
+                  <span>Professional Community</span>
+                </div>
               </div>
             </div>
 
-            {/* Right Panel - EXPERT-LED TRAINING */}
+            {/* Right Panel - Video Preview Grid */}
             <div className="relative">
-              <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-800 shadow-2xl">
-                <div className="text-center mb-8">
-                  <BookOpen className="w-20 h-20 text-amber-400 mx-auto mb-6" />
-                  <h3 className="text-3xl font-bold text-amber-400 mb-4">EXPERT-LED TRAINING</h3>
+              <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 shadow-2xl">
+                <div className="text-center mb-6">
+                  <Play className="w-16 h-16 text-amber-400 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-amber-400 mb-2">Featured Training</h3>
+                  <p className="text-gray-400">Professional medical aesthetics content</p>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-6 mb-8">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-400">500+</div>
-                    <div className="text-gray-400 text-sm">Expert Instructors</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-400">15,000+</div>
-                    <div className="text-gray-400 text-sm">Professionals</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-400">95%</div>
-                    <div className="text-gray-400 text-sm">Success Rate</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-400">24/7</div>
-                    <div className="text-gray-400 text-sm">Support</div>
-                  </div>
+                {/* Video Preview Grid */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  {videoPreviews.map((video) => (
+                    <div key={video.id} className="relative group cursor-pointer">
+                      <div className="relative h-24 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded-lg overflow-hidden">
+                        {/* Video Thumbnail */}
+                        <div className="w-full h-full bg-gradient-to-br from-amber-400/30 to-purple-500/30 flex items-center justify-center">
+                          <Play className="w-8 h-8 text-amber-400 group-hover:scale-110 transition-transform" />
+                        </div>
+                        
+                        {/* Video Controls Overlay */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <div className="flex items-center space-x-2">
+                            <button className="w-8 h-8 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
+                              <Play className="w-4 h-4 text-black" />
+                            </button>
+                            <button className="w-6 h-6 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                              <Volume2 className="w-3 h-3 text-white" />
+                            </button>
+                            <button className="w-6 h-6 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                              <Maximize2 className="w-3 h-3 text-white" />
+                            </button>
+                          </div>
+                        </div>
+                        
+                        {/* Duration Badge */}
+                        <div className="absolute bottom-2 right-2 bg-black/80 text-white px-1 py-0.5 rounded text-xs">
+                          {video.duration}
+                        </div>
+                      </div>
+                      
+                      {/* Video Info */}
+                      <div className="mt-2">
+                        <h4 className="font-semibold text-white text-sm leading-tight line-clamp-2">
+                          {video.title}
+                        </h4>
+                        <p className="text-gray-400 text-xs mt-1">
+                          {video.category} • {video.views} views
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <button
                   onClick={() => router.push('/videos')}
-                  className="w-full bg-amber-400 text-black py-4 rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
+                  className="w-full bg-amber-400 text-black py-3 rounded-lg hover:bg-amber-500 transition-all font-medium"
                 >
-                  Explore Platform
+                  Browse All Videos
                 </button>
               </div>
             </div>
@@ -281,7 +354,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Videos Section */}
+      {/* Featured Videos Section - More Prominent */}
       <section className="py-20 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -294,7 +367,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Featured Videos Grid */}
+          {/* Featured Videos Grid - Larger, More Prominent */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {featuredVideos.map((video) => (
               <div
@@ -302,14 +375,33 @@ export default function Home() {
                 className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all cursor-pointer group"
                 onClick={() => router.push('/videos')}
               >
-                {/* Thumbnail */}
-                <div className="relative h-48">
+                {/* Enhanced Video Thumbnail */}
+                <div className="relative h-64">
                   <div className="w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center">
-                    <Play className="w-16 h-16 text-amber-400 group-hover:scale-110 transition-transform" />
+                    <Play className="w-20 h-20 text-amber-400 group-hover:scale-110 transition-transform" />
                   </div>
+                  
+                  {/* Video Controls Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <div className="flex items-center space-x-3">
+                      <button className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
+                        <Play className="w-6 h-6 text-black" />
+                      </button>
+                      <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                        <Volume2 className="w-5 h-5 text-white" />
+                      </button>
+                      <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                        <Maximize2 className="w-5 h-5 text-white" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Duration Badge */}
                   <div className="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
                     {video.duration}
                   </div>
+                  
+                  {/* Views Badge */}
                   <div className="absolute bottom-3 left-3 bg-black/80 text-white px-2 py-1 rounded text-xs flex items-center space-x-1">
                     <Eye className="w-3 h-3" />
                     <span>{video.views}</span>
