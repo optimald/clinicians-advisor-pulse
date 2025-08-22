@@ -214,8 +214,9 @@ export default function PlatformPage() {
                 transition={{ duration: 0.8 }}
                 className="text-6xl md:text-7xl font-bold mb-6 leading-tight"
               >
-                <span className="text-white">WE MAKE</span><br />
-                <span className="text-amber-400">DOPE</span> <span className="text-white">EXPERIENCES</span>
+                <span className="text-white">ADVANCE YOUR</span><br />
+                <span className="text-amber-400">MEDICAL AESTHETICS</span><br />
+                <span className="text-white">CAREER</span>
               </motion.h1>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -223,8 +224,9 @@ export default function PlatformPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-xl text-gray-300 mb-8 leading-relaxed"
               >
-                The definitive digital ecosystem where verified medical aesthetics professionals 
-                can build their brand, monetize their expertise, and cultivate a professional community.
+                Join the definitive digital ecosystem where verified medical aesthetics professionals 
+                can build their expertise, earn certifications, and cultivate a professional community 
+                that drives patient outcomes and career growth.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -233,10 +235,10 @@ export default function PlatformPage() {
                 className="flex flex-col sm:flex-row gap-4"
               >
                 <button className="bg-amber-400 text-black px-8 py-4 rounded-lg hover:bg-amber-500 transition-all font-medium text-lg">
-                  REQUEST QUOTE
+                  START LEARNING
                 </button>
                 <button className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-black transition-all font-medium text-lg">
-                  Learn more
+                  View Courses
                 </button>
               </motion.div>
             </div>
@@ -244,15 +246,28 @@ export default function PlatformPage() {
             <div className="relative">
               <div className="bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded-2xl p-8 backdrop-blur-sm border border-amber-400/30">
                 <div className="text-center">
-                  <Calendar className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold mb-2">SELECT APPOINTMENT TIME</h3>
-                  <div className="grid grid-cols-3 gap-2 mb-4">
-                    <div className="bg-white/10 rounded p-2 text-sm">Morning<br />9:00 AM</div>
-                    <div className="bg-white/10 rounded p-2 text-sm">Afternoon<br />1:00 PM</div>
-                    <div className="bg-white/10 rounded p-2 text-sm">Evening<br />5:00 PM</div>
+                  <BookOpen className="w-16 h-16 text-amber-400 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold mb-2">EXPERT-LED TRAINING</h3>
+                  <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
+                    <div className="bg-white/10 rounded p-3">
+                      <div className="text-amber-400 font-semibold">500+</div>
+                      <div>Expert Instructors</div>
+                    </div>
+                    <div className="bg-white/10 rounded p-3">
+                      <div className="text-amber-400 font-semibold">15,000+</div>
+                      <div>Professionals</div>
+                    </div>
+                    <div className="bg-white/10 rounded p-3">
+                      <div className="text-amber-400 font-semibold">95%</div>
+                      <div>Success Rate</div>
+                    </div>
+                    <div className="bg-white/10 rounded p-3">
+                      <div className="text-amber-400 font-semibold">24/7</div>
+                      <div>Support</div>
+                    </div>
                   </div>
                   <button className="bg-amber-400 text-black px-6 py-2 rounded-lg font-medium">
-                    Book Now
+                    Explore Platform
                   </button>
                 </div>
               </div>
