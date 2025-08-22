@@ -250,7 +250,12 @@ export default function ConceptPage() {
     setIsExporting(true)
     
     try {
-      const pdf = new jsPDF('p', 'mm', 'a4')
+      // Use landscape orientation for better slide fit
+      const pdf = new jsPDF('l', 'mm', 'a4') // Landscape orientation
+      
+      // Get page dimensions
+      const pageWidth = pdf.internal.pageSize.getWidth() // 297mm for landscape A4
+      const pageHeight = pdf.internal.pageSize.getHeight() // 210mm for landscape A4
       
       // Set PDF metadata
       pdf.setProperties({
@@ -263,15 +268,15 @@ export default function ConceptPage() {
       // Add title page
       pdf.setFontSize(24)
       pdf.setTextColor(59, 130, 246) // Blue color
-      pdf.text('CliniciansAdvisor Platform Concept', 105, 40, { align: 'center' })
+      pdf.text('CliniciansAdvisor Platform Concept', 148, 40, { align: 'center' })
       
       pdf.setFontSize(16)
       pdf.setTextColor(107, 114, 128) // Gray color
-      pdf.text('Medical Aesthetics Learning Platform Overview', 105, 55, { align: 'center' })
+      pdf.text('Medical Aesthetics Learning Platform Overview', 148, 55, { align: 'center' })
       
       pdf.setFontSize(12)
       pdf.setTextColor(156, 163, 175)
-      pdf.text(`Generated on ${new Date().toLocaleDateString()}`, 105, 70, { align: 'center' })
+      pdf.text(`Generated on ${new Date().toLocaleDateString()}`, 148, 70, { align: 'center' })
       
       pdf.setFontSize(14)
       pdf.setTextColor(75, 85, 99)
@@ -279,7 +284,7 @@ export default function ConceptPage() {
       
       slides.forEach((slide, index) => {
         const yPos = 100 + (index * 8)
-        if (yPos < 280) { // Check if we have space on this page
+        if (yPos < 200) { // Check if we have space on this page
           pdf.setFontSize(12)
           pdf.setTextColor(59, 130, 246)
           pdf.text(`${index + 1}.`, 20, yPos)
@@ -293,8 +298,8 @@ export default function ConceptPage() {
         // Navigate to the slide
         setCurrentSlide(i)
         
-        // Wait for the slide to render
-        await new Promise(resolve => setTimeout(resolve, 500))
+        // Wait for the slide to render and animations to complete
+        await new Promise(resolve => setTimeout(resolve, 1000))
         
         // Capture the slide content
         const slideElement = document.getElementById('slide-content')
@@ -302,29 +307,28 @@ export default function ConceptPage() {
           throw new Error('Slide content not found')
         }
 
-        // Add new page for each slide (except first one which is title page)
-        if (i > 0) {
-          pdf.addPage()
-        }
+        // Add new page for each slide (separate from title page)
+        pdf.addPage()
 
         try {
-          // Capture the slide as an image
+          // Capture the slide as an image with better quality settings
           const canvas = await html2canvas(slideElement, {
-            scale: 2, // Higher resolution
+            scale: 3, // Higher resolution for better quality
             useCORS: true,
             allowTaint: true,
             backgroundColor: '#ffffff',
             width: slideElement.scrollWidth,
-            height: slideElement.scrollHeight
+            height: slideElement.scrollHeight,
+            logging: false,
+            removeContainer: true,
+            foreignObjectRendering: false
           })
 
           // Convert canvas to image
-          const imgData = canvas.toDataURL('image/png')
+          const imgData = canvas.toDataURL('image/png', 1.0) // Maximum quality
           
-          // Calculate dimensions to fit on A4 page
-          const pageWidth = pdf.internal.pageSize.getWidth()
-          const pageHeight = pdf.internal.pageSize.getHeight()
-          const margin = 10
+          // Calculate dimensions to fit on landscape A4 page
+          const margin = 15
           const maxWidth = pageWidth - (2 * margin)
           const maxHeight = pageHeight - (2 * margin)
           
@@ -345,10 +349,14 @@ export default function ConceptPage() {
           // Add the slide image to PDF
           pdf.addImage(imgData, 'PNG', x, y, finalWidth, finalHeight)
           
+          // Add slide number and title
+          pdf.setFontSize(12)
+          pdf.setTextColor(59, 130, 246)
+          pdf.text(`Slide ${i + 1}: ${slides[i].title}`, 20, pageHeight - 10)
+          
           // Add page number
-          pdf.setFontSize(10)
           pdf.setTextColor(156, 163, 175)
-          pdf.text(`Page ${i + 2} of ${slides.length + 1}`, 105, pageHeight - 10, { align: 'center' })
+          pdf.text(`Page ${i + 2} of ${slides.length + 1}`, pageWidth - 20, pageHeight - 10, { align: 'right' })
           
         } catch (error) {
           console.error(`Error capturing slide ${i + 1}:`, error)
@@ -369,7 +377,7 @@ export default function ConceptPage() {
           // Slide description
           pdf.setFontSize(12)
           pdf.setTextColor(75, 85, 99)
-          const descriptionLines = pdf.splitTextToSize(slide.description, 170)
+          const descriptionLines = pdf.splitTextToSize(slide.description, 250) // Wider text for landscape
           pdf.text(descriptionLines, 20, 65)
           
           // Slide features
@@ -384,10 +392,12 @@ export default function ConceptPage() {
             pdf.text(`• ${feature}`, 25, yPos)
           })
           
-          // Page number
-          pdf.setFontSize(10)
+          // Slide number and page number
+          pdf.setFontSize(12)
+          pdf.setTextColor(59, 130, 246)
+          pdf.text(`Slide ${i + 1}: ${slide.title}`, 20, pageHeight - 10)
           pdf.setTextColor(156, 163, 175)
-          pdf.text(`Page ${i + 2} of ${slides.length + 1}`, 105, 280, { align: 'center' })
+          pdf.text(`Page ${i + 2} of ${slides.length + 1}`, pageWidth - 20, pageHeight - 10, { align: 'right' })
         }
       }
 
