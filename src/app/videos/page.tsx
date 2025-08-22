@@ -292,9 +292,7 @@ export default function VideosPage() {
                         ))}
                       </div>
                       
-                      <button className="w-full bg-amber-400 text-black py-2 rounded-lg hover:bg-amber-500 transition-colors font-medium">
-                        Watch Now
-                      </button>
+                      {/* Removed Watch Now button - entire card is clickable */}
                     </div>
                   </motion.div>
                 ))}

@@ -239,8 +239,25 @@ export default function Home() {
                   {videoPreviews.map((video) => (
                     <div key={video.id} className="relative group cursor-pointer">
                       <div className="relative h-24 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded-lg overflow-hidden">
-                        {/* Video Thumbnail */}
-                        <div className="w-full h-full bg-gradient-to-br from-amber-400/30 to-purple-500/30 flex items-center justify-center">
+                        {/* Video Thumbnail - Now properly displayed */}
+                        {video.thumbnail ? (
+                          <img 
+                            src={video.thumbnail} 
+                            alt={video.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              // Fallback to gradient if image fails to load
+                              e.currentTarget.style.display = 'none';
+                              const fallback = e.currentTarget.nextElementSibling;
+                              if (fallback) {
+                                (fallback as HTMLElement).style.display = 'flex';
+                              }
+                            }}
+                          />
+                        ) : null}
+                        
+                        {/* Fallback gradient background */}
+                        <div className={`w-full h-full bg-gradient-to-br from-amber-400/30 to-purple-500/30 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
                           <Play className="w-8 h-8 text-amber-400 group-hover:scale-110 transition-transform" />
                         </div>
                         
@@ -367,88 +384,106 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Featured Videos Grid - Larger, More Prominent */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {featuredVideos.map((video) => (
-              <div
-                key={video.id}
-                className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all cursor-pointer group"
-                onClick={() => router.push('/videos')}
-              >
-                {/* Enhanced Video Thumbnail */}
-                <div className="relative h-64">
-                  <div className="w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center">
-                    <Play className="w-20 h-20 text-amber-400 group-hover:scale-110 transition-transform" />
-                  </div>
-                  
-                  {/* Video Controls Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <div className="flex items-center space-x-3">
-                      <button className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
-                        <Play className="w-6 h-6 text-black" />
-                      </button>
-                      <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                        <Volume2 className="w-5 h-5 text-white" />
-                      </button>
-                      <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
-                        <Maximize2 className="w-5 h-5 text-white" />
-                      </button>
+                {/* Featured Videos Grid - Larger, More Prominent */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                  {featuredVideos.map((video) => (
+                    <div
+                      key={video.id}
+                      className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all cursor-pointer group"
+                      onClick={() => router.push('/videos')}
+                    >
+                      {/* Enhanced Video Thumbnail */}
+                      <div className="relative h-64">
+                        {/* Display actual thumbnail if available */}
+                        {video.thumbnail ? (
+                          <img 
+                            src={video.thumbnail} 
+                            alt={video.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              // Fallback to gradient if image fails to load
+                              e.currentTarget.style.display = 'none';
+                              const fallback = e.currentTarget.nextElementSibling;
+                              if (fallback) {
+                                (fallback as HTMLElement).style.display = 'flex';
+                              }
+                            }}
+                          />
+                        ) : null}
+                        
+                        {/* Fallback gradient background */}
+                        <div className={`w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
+                          <Play className="w-20 h-20 text-amber-400 group-hover:scale-110 transition-transform" />
+                        </div>
+                        
+                        {/* Video Controls Overlay */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <div className="flex items-center space-x-3">
+                            <button className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors">
+                              <Play className="w-6 h-6 text-black" />
+                            </button>
+                            <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                              <Volume2 className="w-5 h-5 text-white" />
+                            </button>
+                            <button className="w-10 h-10 bg-black/70 rounded-full flex items-center justify-center hover:bg-black/90 transition-colors">
+                              <Maximize2 className="w-5 h-5 text-white" />
+                            </button>
+                          </div>
+                        </div>
+                        
+                        {/* Duration Badge */}
+                        <div className="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
+                          {video.duration}
+                        </div>
+                        
+                        {/* Views Badge */}
+                        <div className="absolute bottom-3 left-3 bg-black/80 text-white px-2 py-1 rounded text-xs flex items-center space-x-1">
+                          <Eye className="w-3 h-3" />
+                          <span>{video.views}</span>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-6">
+                        <div className="flex items-center space-x-2 mb-3">
+                          <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
+                            {categories.find(c => c.id === video.category)?.name}
+                          </span>
+                          {video.difficulty && (
+                            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+                              {video.difficulty}
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 className="font-semibold text-lg mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
+                          {video.title}
+                        </h3>
+
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                          {video.description}
+                        </p>
+
+                        {video.instructor && (
+                          <p className="text-amber-400 text-sm mb-4 font-medium">
+                            Instructor: {video.instructor}
+                          </p>
+                        )}
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex flex-wrap gap-1">
+                            {video.tags.slice(0, 2).map((tag, index) => (
+                              <span key={index} className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <ChevronRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Duration Badge */}
-                  <div className="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
-                    {video.duration}
-                  </div>
-                  
-                  {/* Views Badge */}
-                  <div className="absolute bottom-3 left-3 bg-black/80 text-white px-2 py-1 rounded text-xs flex items-center space-x-1">
-                    <Eye className="w-3 h-3" />
-                    <span>{video.views}</span>
-                  </div>
+                  ))}
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
-                      {categories.find(c => c.id === video.category)?.name}
-                    </span>
-                    {video.difficulty && (
-                      <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
-                        {video.difficulty}
-                      </span>
-                    )}
-                  </div>
-
-                  <h3 className="font-semibold text-lg mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
-                    {video.title}
-                  </h3>
-
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                    {video.description}
-                  </p>
-
-                  {video.instructor && (
-                    <p className="text-amber-400 text-sm mb-4 font-medium">
-                      Instructor: {video.instructor}
-                    </p>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-wrap gap-1">
-                      {video.tags.slice(0, 2).map((tag, index) => (
-                        <span key={index} className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
 
           {/* View All Videos CTA */}
           <div className="text-center">
