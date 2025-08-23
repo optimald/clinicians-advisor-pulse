@@ -28,7 +28,7 @@ export default function Home() {
 
 
   // Get featured videos for homepage showcase
-  const featuredVideos = videos.slice(0, 12) // First 12 videos as featured
+  const featuredVideos = videos.slice(0, 20) // First 20 videos as featured
 
   // Platform data
   const courses = [
@@ -570,8 +570,8 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {categories.slice(0, 6).map((category) => {
-              const categoryVideos = videos.filter(v => v.category === category.id).slice(0, 4)
+            {categories.slice(0, 8).map((category) => {
+              const categoryVideos = videos.filter(v => v.category === category.id).slice(0, 8)
               return (
                 <div key={category.id} className="bg-black/50 rounded-xl overflow-hidden border border-gray-800">
                   <div className="p-6">
@@ -648,6 +648,113 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               Browse Complete Video Library
+            </motion.button>
+          </div>
+        </div>
+      </section>
+
+      {/* All Videos Grid Section - Show ALL 201+ Videos */}
+      <section className="py-20 bg-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              COMPLETE VIDEO LIBRARY<br />
+              <span className="text-amber-400">ALL {videos.length}+ VIDEOS</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Every single video in our library, organized for easy browsing and discovery
+            </p>
+          </div>
+
+          {/* Video Grid - Show all videos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            {videos.map((video) => (
+              <motion.div
+                key={video.id}
+                className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 cursor-pointer group"
+                onClick={() => openVideo(video)}
+                whileHover={{ 
+                  scale: 1.03, 
+                  rotateY: 3, 
+                  z: 30, 
+                  borderColor: "#f59e0b",
+                  boxShadow: "0 20px 40px rgba(245, 158, 11, 0.2)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="relative aspect-video bg-gradient-to-br from-amber-400/20 to-purple-500/20">
+                  {video.thumbnail ? (
+                    <img 
+                      src={video.thumbnail} 
+                      alt={video.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                        target.style.display = 'none'
+                        target.nextElementSibling?.classList.remove('hidden')
+                      }}
+                    />
+                  ) : null}
+                  <div className={`absolute inset-0 flex items-center justify-center ${video.thumbnail ? 'hidden' : ''}`}>
+                    <Play className="w-12 h-12 text-amber-400" />
+                  </div>
+                  
+                  {/* Video duration overlay */}
+                  <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
+                    {video.duration}
+                  </div>
+                </div>
+                
+                <div className="p-4">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
+                      {video.category}
+                    </span>
+                    {video.difficulty && (
+                      <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded">
+                        {video.difficulty}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <h3 className="font-semibold text-sm mb-2 line-clamp-2 group-hover:text-amber-400 transition-colors">
+                    {video.title}
+                  </h3>
+                  
+                  <p className="text-xs text-gray-400 line-clamp-2 mb-3">
+                    {video.description}
+                  </p>
+                  
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <span className="flex items-center space-x-1">
+                      <Eye className="w-3 h-3" />
+                      <span>{video.views} views</span>
+                    </span>
+                    {video.instructor && (
+                      <span className="text-amber-400 font-medium truncate">
+                        {video.instructor}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <motion.button
+              onClick={() => router.push('/videos')}
+              className="px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
+              whileHover={{ 
+                scale: 1.05,
+                rotateY: 5,
+                boxShadow: "0 20px 40px rgba(245, 158, 11, 0.3)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              Browse with Advanced Filters & Search
             </motion.button>
           </div>
         </div>
