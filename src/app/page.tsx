@@ -252,7 +252,7 @@ export default function Home() {
                 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                ADVANCE YOUR<br />
+                MASTER MEDICAL<br />
                 <motion.span 
                   className="text-teal-400"
                   whileHover={{ 
@@ -261,13 +261,13 @@ export default function Home() {
                   }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  MEDICAL AESTHETICS
+                  AESTHETICS
                 </motion.span><br />
-                CAREER
+                EDUCATION
               </motion.h1>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                Join the definitive digital ecosystem where verified medical aesthetics professionals can build their expertise, 
-                earn certifications, and cultivate a professional community that drives patient outcomes and career growth.
+                Access comprehensive educational content from industry experts, build your clinical skills through 
+                verified training videos, and advance your medical aesthetics practice with evidence-based knowledge.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -283,7 +283,7 @@ export default function Home() {
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Play className="w-6 h-6" />
-                  <span>START LEARNING</span>
+                  <span>EXPLORE VIDEOS</span>
                   <ArrowRight className="w-5 h-5" />
                 </motion.button>
                 <motion.button
