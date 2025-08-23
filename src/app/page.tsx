@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import Image from 'next/image'
 import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2, MessageSquare } from 'lucide-react'
 import { videos, categories, Video } from '@/data/videos'
 import VideoPlayer from '@/components/VideoPlayer'
@@ -192,10 +193,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-                              <img
+                              <Image
                   src="/ca-logo-transparent.png"
                   alt="CliniciansAdvisor Logo"
+                  width={40}
+                  height={40}
                   className="h-10 w-auto"
+                  priority
                 />
             </div>
 
@@ -1049,10 +1053,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <img
+                <Image
                   src="/ca-logo-transparent.png"
                   alt="CliniciansAdvisor Logo"
+                  width={32}
+                  height={32}
                   className="h-8 w-auto"
+                  priority
                 />
                 <h3 className="text-xl font-bold">CliniciansAdvisor</h3>
               </div>

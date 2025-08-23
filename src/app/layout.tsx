@@ -9,8 +9,12 @@ export const metadata: Metadata = {
   description: 'The definitive digital ecosystem where verified medical aesthetics professionals can build their brand, monetize their expertise, and cultivate a professional community.',
   keywords: 'medical aesthetics, aesthetic medicine, medical training, CME, CEU, aesthetic procedures',
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '16x16', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
     apple: '/favicon.png',
   },
 }
@@ -22,11 +26,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.png" />
-        <link rel="shortcut icon" href="/favicon.png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
-      </head>
       <body className={inter.className}>
         {children}
       </body>
