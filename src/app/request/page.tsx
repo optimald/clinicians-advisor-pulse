@@ -113,25 +113,9 @@ export default function RequestVideoPage() {
             </div>
 
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="/" className="hover:text-teal-400 transition-colors">Home</a>
-              <a href="/videos" className="hover:text-teal-400 transition-colors">Video Library</a>
               <span className="text-teal-400">Request Video</span>
+              <a href="/videos" className="hover:text-teal-400 transition-colors">Browse Videos</a>
             </nav>
-
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => router.push('/videos')}
-                className="px-4 py-2 text-teal-400 hover:text-teal-300 transition-colors"
-              >
-                Browse Videos
-              </button>
-              <button
-                onClick={() => router.push('/')}
-                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors font-medium"
-              >
-                Get Started
-              </button>
-            </div>
           </div>
         </div>
       </header>

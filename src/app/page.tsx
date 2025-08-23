@@ -202,22 +202,8 @@ export default function Home() {
 
                           <nav className="hidden md:flex items-center space-x-8">
                 <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
+                <a href="/videos" className="hover:text-teal-400 transition-colors">Browse Videos</a>
               </nav>
-
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => router.push('/videos')}
-                className="px-4 py-2 text-teal-400 hover:text-teal-300 transition-colors"
-              >
-                Browse Videos
-              </button>
-              <button
-                onClick={() => router.push('/videos')}
-                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors font-medium"
-              >
-                Get Started
-              </button>
-            </div>
           </div>
         </div>
       </header>

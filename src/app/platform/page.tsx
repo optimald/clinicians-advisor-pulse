@@ -187,14 +187,8 @@ export default function PlatformPage() {
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#courses" className="hover:text-amber-400 transition-colors">Master Courses</a>
-              <a href="#certificates" className="hover:text-amber-400 transition-colors">Certificates</a>
-              <a href="#community" className="hover:text-amber-400 transition-colors">Community</a>
-              <a href="#about" className="hover:text-amber-400 transition-colors">About</a>
-              <a href="/login" className="hover:text-amber-400 transition-colors">Login</a>
-              <a href="/signup" className="bg-amber-400 hover:bg-amber-500 text-black px-6 py-2 rounded-lg transition-all font-medium">
-                Get Started
-              </a>
+              <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
+              <a href="/videos" className="hover:text-teal-400 transition-colors">Browse Videos</a>
             </nav>
           </div>
         </div>

@@ -108,8 +108,8 @@ export default function VideosPage() {
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="/" className="hover:text-teal-400 transition-colors">Home</a>
               <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
+              <a href="/videos" className="text-teal-400">Browse Videos</a>
             </nav>
           </div>
         </div>
