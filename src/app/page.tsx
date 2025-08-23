@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2 } from 'lucide-react'
+import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2, MessageSquare } from 'lucide-react'
 import { videos, categories, Video } from '@/data/videos'
 import VideoPlayer from '@/components/VideoPlayer'
 import React from 'react'
@@ -309,6 +309,23 @@ export default function Home() {
                 >
                   <BookOpen className="w-6 h-6" />
                   <span>Watch Demo</span>
+                </motion.button>
+              </div>
+              
+              {/* Request Video Button */}
+              <div className="flex justify-center mb-6">
+                <motion.button
+                  onClick={() => router.push('/videos#request-video')}
+                  className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 text-amber-400 rounded-lg font-medium transition-all border border-gray-700 hover:border-amber-400/50"
+                  whileHover={{ 
+                    scale: 1.02,
+                    rotateY: 2
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Request a Video</span>
                 </motion.button>
               </div>
 

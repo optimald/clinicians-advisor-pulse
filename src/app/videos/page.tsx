@@ -422,6 +422,183 @@ export default function VideosPage() {
         </div>
       </section>
 
+      {/* Request a Video Section */}
+      <section id="request-video" className="py-20 bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl md:text-5xl font-bold mb-6"
+            >
+              Can't find what you're looking for?
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl text-gray-300 max-w-3xl mx-auto"
+            >
+              Request a specific video topic, device training, or procedure demonstration. 
+              We're constantly expanding our library based on your needs.
+            </motion.p>
+          </div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="bg-black/50 rounded-2xl p-8 border border-gray-800"
+          >
+            <form className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="topic" className="block text-sm font-medium text-gray-300 mb-2">
+                    Video Topic or Title *
+                  </label>
+                  <input
+                    type="text"
+                    id="topic"
+                    name="topic"
+                    required
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                    placeholder="e.g., Advanced Botox Injection Techniques"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="category" className="block text-sm font-medium text-gray-300 mb-2">
+                    Preferred Category
+                  </label>
+                  <select
+                    id="category"
+                    name="category"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                  >
+                    <option value="">Select a category</option>
+                    <option value="device-demos-training">Device Demos / Training</option>
+                    <option value="device-highlights">Device Highlights</option>
+                    <option value="webinars-industry">Webinars / Industry Knowledge</option>
+                    <option value="medtech-podcast">MedTech Marketplace Podcast</option>
+                    <option value="live-streams">Live Streams</option>
+                    <option value="shorts-social">Shorts / Social</option>
+                    <option value="service-maintenance">Service & Maintenance</option>
+                    <option value="mrp-corp">MRP Corp</option>
+                    <option value="why-mrp">Why MRP</option>
+                    <option value="testimonials">Testimonials</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">
+                  Detailed Description *
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                  placeholder="Describe what you'd like to see in this video, including specific techniques, devices, or procedures..."
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="difficulty" className="block text-sm font-medium text-gray-300 mb-2">
+                    Target Skill Level
+                  </label>
+                  <select
+                    id="difficulty"
+                    name="difficulty"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                  >
+                    <option value="">Any level</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label htmlFor="urgency" className="block text-sm font-medium text-gray-300 mb-2">
+                    Priority Level
+                  </label>
+                  <select
+                    id="urgency"
+                    name="urgency"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                  >
+                    <option value="low">Low - Would be nice to have</option>
+                    <option value="medium">Medium - Important for my practice</option>
+                    <option value="high">High - Critical for my current needs</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                    placeholder="Optional - for follow-up questions"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="name"
+                    name="email"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                    placeholder="Optional - to notify you when video is available"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  id="newsletter"
+                  name="newsletter"
+                  className="w-4 h-4 text-amber-400 bg-gray-800 border-gray-700 rounded focus:ring-amber-400 focus:ring-2"
+                />
+                <label htmlFor="newsletter" className="text-sm text-gray-300">
+                  Subscribe to our newsletter for updates on new videos and features
+                </label>
+              </div>
+
+              <div className="text-center pt-4">
+                <motion.button
+                  type="submit"
+                  className="px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
+                  whileHover={{ 
+                    scale: 1.05,
+                    rotateY: 5,
+                    boxShadow: "0 20px 40px rgba(245, 158, 11, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  Submit Video Request
+                </motion.button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-amber-400 to-orange-500 text-black relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
