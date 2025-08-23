@@ -357,9 +357,9 @@ export default function ConceptPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <img 
-                src="/CA logo transparent.png" 
-                alt="CliniciansAdvisor Logo" 
+                            <img
+                src="/ca-logo-transparent.png"
+                alt="CliniciansAdvisor Logo"
                 className="h-8 w-auto"
               />
               <h1 className="text-xl font-bold text-gray-900">Platform Concept</h1>
