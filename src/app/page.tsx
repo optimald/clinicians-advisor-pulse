@@ -193,13 +193,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-                              <Image
+                              <img
                   src="/ca-logo-transparent.png"
                   alt="CliniciansAdvisor Logo"
-                  width={40}
-                  height={40}
                   className="h-10 w-auto"
-                  priority
                 />
             </div>
 
@@ -1053,13 +1050,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <Image
+                <img
                   src="/ca-logo-transparent.png"
                   alt="CliniciansAdvisor Logo"
-                  width={32}
-                  height={32}
                   className="h-8 w-auto"
-                  priority
                 />
                 <h3 className="text-xl font-bold">CliniciansAdvisor</h3>
               </div>
