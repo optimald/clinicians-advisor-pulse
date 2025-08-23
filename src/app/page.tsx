@@ -4,15 +4,17 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import Image from 'next/image'
-import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2, MessageSquare } from 'lucide-react'
+import { ArrowRight, Star, BookOpen, Users, Globe, Play, Search, Filter, Clock, Eye, ChevronRight, Zap, MessageCircle, Shield, BarChart3, Award, CheckCircle, ChevronRight as ChevronRightIcon, ArrowUpRight, Calendar, CreditCard, Target, TrendingUp, Volume2, VolumeX, Maximize2, Settings, Pause, Minimize2, MessageSquare, Menu, X } from 'lucide-react'
 import { videos, categories, Video } from '@/data/videos'
 import VideoPlayer from '@/components/VideoPlayer'
+import LaserParticles from '@/components/LaserParticles'
 import React from 'react'
 
 export default function Home() {
   const router = useRouter()
   const [selectedVideo, setSelectedVideo] = useState<typeof videos[0] | null>(null)
   const [isPlayerOpen, setIsPlayerOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   // Open video in modal player
   const openVideo = (video: typeof videos[0]) => {
@@ -193,18 +195,55 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-                              <img
-                  src="/ca-logo-transparent.png"
-                  alt="CliniciansAdvisor Logo"
-                  className="h-10 w-auto"
-                />
+              <img
+                src="/ca-logo-transparent.png"
+                alt="CliniciansAdvisor Logo"
+                className="h-10 w-auto"
+              />
             </div>
 
-                          <nav className="hidden md:flex items-center space-x-8">
-                <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
-                <a href="/videos" className="hover:text-teal-400 transition-colors">Browse Videos</a>
-              </nav>
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8">
+              <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
+              <a href="/videos" className="hover:text-teal-400 transition-colors">Browse Videos</a>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:text-teal-400 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-gray-800 py-4"
+            >
+              <nav className="flex flex-col space-y-4">
+                <a 
+                  href="/request" 
+                  className="text-white hover:text-teal-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Request Video
+                </a>
+                <a 
+                  href="/videos" 
+                  className="text-white hover:text-teal-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Browse Videos
+                </a>
+              </nav>
+            </motion.div>
+          )}
         </div>
       </header>
 
@@ -212,6 +251,9 @@ export default function Home() {
 
       {/* Hero Section - Video-Centric like Vimeo */}
       <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 overflow-hidden">
+        {/* Laser Particles Background */}
+        <LaserParticles />
+        
         {/* Background Elements with 3D Effects */}
         <div className="absolute inset-0 bg-gradient-to-r from-teal-400/5 to-teal-500/5"></div>
         <motion.div 
@@ -287,7 +329,7 @@ export default function Home() {
                   <ArrowRight className="w-5 h-5" />
                 </motion.button>
                 <motion.button
-                  onClick={() => router.push('/videos')}
+                  onClick={() => router.push('/request')}
                   className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-white rounded-lg font-bold text-lg"
                   whileHover={{ 
                     scale: 1.05,
@@ -298,27 +340,11 @@ export default function Home() {
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <BookOpen className="w-6 h-6" />
-                  <span>Watch Demo</span>
-                </motion.button>
-              </div>
-              
-              {/* Request Video Button */}
-              <div className="flex justify-center mb-6">
-                <motion.button
-                  onClick={() => router.push('/request')}
-                  className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 text-teal-400 rounded-lg font-medium transition-all border border-gray-700 hover:border-teal-400/50"
-                  whileHover={{ 
-                    scale: 1.02,
-                    rotateY: 2
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <MessageSquare className="w-4 h-4" />
+                  <MessageSquare className="w-6 h-6" />
                   <span>Request a Video</span>
                 </motion.button>
               </div>
+
 
               {/* Trust Indicators */}
               <div className="flex items-center space-x-6 text-sm text-gray-400">
@@ -661,113 +687,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* All Videos Grid Section - Show ALL 201+ Videos */}
-      <section className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              COMPLETE VIDEO LIBRARY<br />
-              <span className="text-teal-400">ALL {videos.length}+ VIDEOS</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Every single video in our library, organized for easy browsing and discovery
-            </p>
-          </div>
-
-          {/* Video Grid - Show all videos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-            {videos.map((video) => (
-                              <motion.div
-                  key={video.id}
-                  className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-teal-400/50 cursor-pointer group"
-                  onClick={() => openVideo(video)}
-                  whileHover={{ 
-                    scale: 1.03, 
-                    rotateY: 3, 
-                    z: 30, 
-                    borderColor: "#5A9B9B",
-                    boxShadow: "0 20px 40px rgba(90, 155, 155, 0.2)"
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                                  <div className="relative aspect-video bg-gradient-to-br from-teal-400/20 to-teal-500/20">
-                  {video.thumbnail ? (
-                    <img 
-                      src={video.thumbnail} 
-                      alt={video.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        target.style.display = 'none'
-                        target.nextElementSibling?.classList.remove('hidden')
-                      }}
-                    />
-                  ) : null}
-                  <div className={`absolute inset-0 flex items-center justify-center ${video.thumbnail ? 'hidden' : ''}`}>
-                    <Play className="w-12 h-12 text-amber-400" />
-                  </div>
-                  
-                  {/* Video duration overlay */}
-                  <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
-                    {video.duration}
-                  </div>
-                </div>
-                
-                <div className="p-4">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-xs bg-teal-400/20 text-teal-400 px-2 py-1 rounded">
-                      {video.category}
-                    </span>
-                    {video.difficulty && (
-                      <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded">
-                        {video.difficulty}
-                      </span>
-                    )}
-                  </div>
-                  
-                  <h3 className="font-semibold text-sm mb-2 line-clamp-2 group-hover:text-amber-400 transition-colors">
-                    {video.title}
-                  </h3>
-                  
-                  <p className="text-xs text-gray-400 line-clamp-2 mb-3">
-                    {video.description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span className="flex items-center space-x-1">
-                      <Eye className="w-3 h-3" />
-                      <span>{video.views} views</span>
-                    </span>
-                    {video.instructor && (
-                      <span className="text-amber-400 font-medium truncate">
-                        {video.instructor}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <motion.button
-              onClick={() => router.push('/videos')}
-              className="px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
-              whileHover={{ 
-                scale: 1.05,
-                rotateY: 5,
-                boxShadow: "0 20px 40px rgba(245, 158, 11, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              Browse with Advanced Filters & Search
-            </motion.button>
-          </div>
-        </div>
-      </section>
-
       {/* How We Can Help Section */}
       <section className="py-20 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1019,10 +938,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Become a part of the aesthetic revolution
+            Master Medical Aesthetics Education
           </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Shape the future of medical aesthetics education and join a community of innovators and experts pushing the boundaries of what's possible.
+            Join the definitive platform for medical aesthetics professionals and advance your clinical skills through expert-led training and comprehensive resources.
           </p>
           <button className="bg-black text-white px-8 py-4 rounded-lg hover:bg-gray-900 transition-all font-bold text-lg">
             Get Started Today
@@ -1041,7 +960,6 @@ export default function Home() {
                   alt="CliniciansAdvisor Logo"
                   className="h-8 w-auto"
                 />
-                <h3 className="text-xl font-bold">CliniciansAdvisor</h3>
               </div>
               <p className="text-gray-400">
                 The definitive digital ecosystem for medical aesthetics professionals.

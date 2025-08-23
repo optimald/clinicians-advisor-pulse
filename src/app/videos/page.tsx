@@ -24,7 +24,9 @@ import {
   Zap,
   Star,
   Volume2,
-  Maximize2
+  Maximize2,
+  Menu,
+  X
 } from 'lucide-react'
 import { videos, categories, getVideosByCategory, searchVideos, getPaginatedVideos, type Video } from '@/data/videos'
 import VideoPlayer from '@/components/VideoPlayer'
@@ -38,6 +40,7 @@ export default function VideosPage() {
   const [isPlayerOpen, setIsPlayerOpen] = useState(false)
   const [videosPerPage, setVideosPerPage] = useState(50) // Increased default to show more videos
   const [showAllVideos, setShowAllVideos] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   // Video player functions
   const openVideo = (video: Video) => {
@@ -99,7 +102,7 @@ export default function VideosPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-                            <img
+              <img
                 src="/ca-logo-transparent.png"
                 alt="CliniciansAdvisor Logo"
                 className="h-10 w-auto"
@@ -107,11 +110,48 @@ export default function VideosPage() {
               <h1 className="text-2xl font-bold">Video Library</h1>
             </div>
             
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
               <a href="/videos" className="text-teal-400">Browse Videos</a>
             </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:text-teal-400 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-gray-800 py-4"
+            >
+              <nav className="flex flex-col space-y-4">
+                <a 
+                  href="/request" 
+                  className="text-white hover:text-teal-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Request Video
+                </a>
+                <a 
+                  href="/videos" 
+                  className="text-teal-400 py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Browse Videos
+                </a>
+              </nav>
+            </motion.div>
+          )}
         </div>
       </header>
 

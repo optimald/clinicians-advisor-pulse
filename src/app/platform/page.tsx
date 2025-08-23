@@ -21,12 +21,15 @@ import {
   Calendar,
   CreditCard,
   Target,
-  TrendingUp
+  TrendingUp,
+  Menu,
+  X
 } from 'lucide-react'
 
 export default function PlatformPage() {
   const [pricingToggle, setPricingToggle] = useState<'monthly' | 'yearly'>('monthly')
   const [activeTab, setActiveTab] = useState<'courses' | 'certificates' | 'community'>('courses')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const courses = [
     {
@@ -179,18 +182,55 @@ export default function PlatformPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-                            <img
+              <img
                 src="/ca-logo-transparent.png"
                 alt="CliniciansAdvisor Logo"
                 className="h-10 w-auto"
               />
             </div>
             
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
               <a href="/videos" className="hover:text-teal-400 transition-colors">Browse Videos</a>
             </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:text-teal-400 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-gray-800 py-4"
+            >
+              <nav className="flex flex-col space-y-4">
+                <a 
+                  href="/request" 
+                  className="text-white hover:text-teal-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Request Video
+                </a>
+                <a 
+                  href="/videos" 
+                  className="text-white hover:text-teal-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Browse Videos
+                </a>
+              </nav>
+            </motion.div>
+          )}
         </div>
       </header>
 
@@ -553,7 +593,7 @@ export default function PlatformPage() {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-6xl font-bold mb-6"
           >
-            Become a part of the aesthetic revolution
+            Master Medical Aesthetics Education
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -561,8 +601,7 @@ export default function PlatformPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl mb-8 max-w-3xl mx-auto"
           >
-            Shape the future of medical aesthetics education and join a community of innovators 
-            and experts pushing the boundaries of what's possible.
+            Join the definitive platform for medical aesthetics professionals and advance your clinical skills through expert-led training and comprehensive resources.
           </motion.p>
           <motion.button
             initial={{ opacity: 0, y: 20 }}
@@ -582,7 +621,6 @@ export default function PlatformPage() {
             <div>
               <div className="flex items-center space-x-3 mb-4">
                 <Star className="w-8 h-8 text-amber-400" />
-                <span className="text-2xl font-bold">CliniciansAdvisor</span>
               </div>
               <p className="text-gray-400">
                 The definitive digital ecosystem for medical aesthetics professionals.

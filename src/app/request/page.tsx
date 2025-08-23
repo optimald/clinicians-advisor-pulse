@@ -9,12 +9,15 @@ import {
   Video,
   Star,
   Send,
-  CheckCircle
+  CheckCircle,
+  Menu,
+  X
 } from 'lucide-react'
 
 export default function RequestVideoPage() {
   const router = useRouter()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
     topic: '',
     category: '',
@@ -112,11 +115,42 @@ export default function RequestVideoPage() {
               />
             </div>
 
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <span className="text-teal-400">Request Video</span>
               <a href="/videos" className="hover:text-teal-400 transition-colors">Browse Videos</a>
             </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:text-teal-400 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-gray-800 py-4"
+            >
+              <nav className="flex flex-col space-y-4">
+                <span className="text-teal-400 py-2">Request Video</span>
+                <a 
+                  href="/videos" 
+                  className="text-white hover:text-teal-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Browse Videos
+                </a>
+              </nav>
+            </motion.div>
+          )}
         </div>
       </header>
 
