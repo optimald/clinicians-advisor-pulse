@@ -35,7 +35,8 @@ export default function VideosPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
   const [isPlayerOpen, setIsPlayerOpen] = useState(false)
-  const [videosPerPage] = useState(12)
+  const [videosPerPage, setVideosPerPage] = useState(50) // Increased default to show more videos
+  const [showAllVideos, setShowAllVideos] = useState(false)
 
   // Video player functions
   const openVideo = (video: Video) => {
@@ -60,8 +61,8 @@ export default function VideosPage() {
 
   // Pagination
   const totalPages = Math.ceil(filteredVideos.length / videosPerPage)
-  const startIndex = (currentPage - 1) * videosPerPage
-  const endIndex = startIndex + videosPerPage
+  const startIndex = showAllVideos ? 0 : (currentPage - 1) * videosPerPage
+  const endIndex = showAllVideos ? filteredVideos.length : startIndex + videosPerPage
   const currentVideos = filteredVideos.slice(startIndex, endIndex)
 
   const handleCategoryChange = (category: string) => {
@@ -196,6 +197,18 @@ export default function VideosPage() {
               >
                 <List className="w-5 h-5" />
               </button>
+              
+              {/* Show All Videos Toggle */}
+              <button
+                onClick={() => setShowAllVideos(!showAllVideos)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  showAllVideos 
+                    ? 'bg-amber-400 text-black' 
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                }`}
+              >
+                {showAllVideos ? 'Show Paginated' : 'Show All Videos'}
+              </button>
             </div>
           </div>
         </div>
@@ -236,6 +249,35 @@ export default function VideosPage() {
       {/* Videos Grid */}
       <section className="py-12 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Display Counter */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="text-gray-300">
+              <span className="text-amber-400 font-semibold">{currentVideos.length}</span> of {filteredVideos.length} videos
+              {showAllVideos ? ' (showing all)' : ` (page ${currentPage} of ${totalPages})`}
+            </div>
+            {!showAllVideos && (
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 bg-gray-800 text-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700"
+                >
+                  Previous
+                </button>
+                <span className="text-gray-400 text-sm">
+                  {currentPage} / {totalPages}
+                </span>
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 bg-gray-800 text-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </div>
+          
           {currentVideos.length === 0 ? (
             <div className="text-center py-16">
               <Search className="w-16 h-16 text-gray-600 mx-auto mb-4" />
