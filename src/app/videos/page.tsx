@@ -124,7 +124,7 @@ export default function VideosPage() {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-6xl font-bold mb-6"
           >
-            <span className="text-white">FREE</span> <span className="text-amber-400">VIDEO LIBRARY</span>
+            <span className="text-white">FREE</span> <span className="text-teal-400">VIDEO LIBRARY</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -207,7 +207,7 @@ export default function VideosPage() {
                 onClick={() => setShowAllVideos(!showAllVideos)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   showAllVideos 
-                    ? 'bg-amber-400 text-black' 
+                    ? 'bg-teal-400 text-white' 
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                 }`}
               >
@@ -226,7 +226,7 @@ export default function VideosPage() {
               onClick={() => handleCategoryChange('all')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 selectedCategory === 'all'
-                  ? 'bg-amber-400 text-black'
+                  ? 'bg-teal-400 text-white'
                   : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
@@ -238,7 +238,7 @@ export default function VideosPage() {
                 onClick={() => handleCategoryChange(category.id)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center space-x-2 ${
                   selectedCategory === category.id
-                    ? 'bg-amber-400 text-black'
+                    ? 'bg-teal-400 text-white'
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                 }`}
               >
@@ -256,7 +256,7 @@ export default function VideosPage() {
           {/* Display Counter */}
           <div className="flex items-center justify-between mb-6">
             <div className="text-gray-300">
-              <span className="text-amber-400 font-semibold">{currentVideos.length}</span> of {filteredVideos.length} videos
+              <span className="text-teal-400 font-semibold">{currentVideos.length}</span> of {filteredVideos.length} videos
               {showAllVideos ? ' (showing all)' : ` (page ${currentPage} of ${totalPages})`}
             </div>
             {!showAllVideos && (
@@ -301,7 +301,7 @@ export default function VideosPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className={`bg-black/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 transition-all group cursor-pointer ${
+                    className={`bg-black/50 rounded-xl overflow-hidden border border-gray-800 hover:border-teal-400/50 transition-all group cursor-pointer ${
                       viewMode === 'list' ? 'flex' : ''
                     }`}
                     onClick={() => openVideo(video)}
@@ -326,14 +326,14 @@ export default function VideosPage() {
                       ) : null}
                       
                       {/* Fallback gradient background */}
-                      <div className={`w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
-                        <Play className="w-12 h-12 text-amber-400 group-hover:scale-110 transition-transform" />
+                      <div className={`w-full h-full bg-gradient-to-br from-teal-400/20 to-teal-500/20 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
+                        <Play className="w-12 h-12 text-teal-400 group-hover:scale-110 transition-transform" />
                       </div>
                       
                       {/* Play Overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <div className="w-12 h-12 bg-amber-400/90 rounded-full flex items-center justify-center">
-                          <Play className="w-6 h-6 text-black ml-0.5" />
+                        <div className="w-12 h-12 bg-teal-400/90 rounded-full flex items-center justify-center">
+                          <Play className="w-6 h-6 text-white ml-0.5" />
                         </div>
                       </div>
                       
@@ -349,7 +349,7 @@ export default function VideosPage() {
                     {/* Content */}
                     <div className={`p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
                       <div className="flex items-center space-x-2 mb-2">
-                        <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
+                        <span className="text-xs bg-teal-400/20 text-teal-400 px-2 py-1 rounded">
                           {categories.find(c => c.id === video.category)?.name}
                         </span>
                         {video.difficulty && (

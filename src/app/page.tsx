@@ -198,20 +198,20 @@ export default function Home() {
             </div>
 
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="/videos" className="hover:text-amber-400 transition-colors">Video Library</a>
-              <a href="/concept" className="hover:text-amber-400 transition-colors">Concept</a>
+              <a href="/videos" className="hover:text-teal-400 transition-colors">Video Library</a>
+              <a href="/concept" className="hover:text-teal-400 transition-colors">Concept</a>
             </nav>
 
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => router.push('/videos')}
-                className="px-4 py-2 text-amber-400 hover:text-amber-300 transition-colors"
+                className="px-4 py-2 text-teal-400 hover:text-teal-300 transition-colors"
               >
                 Browse Videos
               </button>
               <button
                 onClick={() => router.push('/videos')}
-                className="px-6 py-2 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-colors font-medium"
+                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors font-medium"
               >
                 Get Started
               </button>
@@ -225,9 +225,9 @@ export default function Home() {
       {/* Hero Section - Video-Centric like Vimeo */}
       <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 overflow-hidden">
         {/* Background Elements with 3D Effects */}
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-400/5 to-purple-500/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-400/5 to-teal-500/5"></div>
         <motion.div 
-          className="absolute top-0 left-0 w-96 h-96 bg-amber-400/5 rounded-full blur-3xl"
+          className="absolute top-0 left-0 w-96 h-96 bg-teal-400/5 rounded-full blur-3xl"
           animate={{
             y: [0, -20, 0],
             x: [0, 10, 0],
@@ -240,7 +240,7 @@ export default function Home() {
           }}
         />
         <motion.div 
-          className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
+          className="absolute bottom-0 right-0 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl"
           animate={{
             y: [0, 20, 0],
             x: [0, -10, 0],
@@ -266,10 +266,10 @@ export default function Home() {
               >
                 ADVANCE YOUR<br />
                 <motion.span 
-                  className="text-amber-400"
+                  className="text-teal-400"
                   whileHover={{ 
                     scale: 1.05,
-                    textShadow: "0 0 30px rgba(245, 158, 11, 0.5)"
+                    textShadow: "0 0 30px rgba(90, 155, 155, 0.5)"
                   }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
@@ -285,11 +285,11 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <motion.button
                   onClick={() => router.push('/videos')}
-                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-black rounded-lg font-bold text-lg shadow-lg"
+                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white rounded-lg font-bold text-lg shadow-lg"
                   whileHover={{ 
                     scale: 1.05,
                     rotateY: 5,
-                    boxShadow: "0 20px 40px rgba(245, 158, 11, 0.3)"
+                    boxShadow: "0 20px 40px rgba(90, 155, 155, 0.3)"
                   }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
@@ -300,12 +300,12 @@ export default function Home() {
                 </motion.button>
                 <motion.button
                   onClick={() => router.push('/videos')}
-                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black rounded-lg font-bold text-lg"
+                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-white rounded-lg font-bold text-lg"
                   whileHover={{ 
                     scale: 1.05,
                     rotateY: -5,
-                    borderColor: "#f59e0b",
-                    boxShadow: "0 10px 30px rgba(245, 158, 11, 0.2)"
+                    borderColor: "#5A9B9B",
+                    boxShadow: "0 10px 30px rgba(90, 155, 155, 0.2)"
                   }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
@@ -319,7 +319,7 @@ export default function Home() {
               <div className="flex justify-center mb-6">
                 <motion.button
                   onClick={() => router.push('/videos#request-video')}
-                  className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 text-amber-400 rounded-lg font-medium transition-all border border-gray-700 hover:border-amber-400/50"
+                  className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 text-teal-400 rounded-lg font-medium transition-all border border-gray-700 hover:border-teal-400/50"
                   whileHover={{ 
                     scale: 1.02,
                     rotateY: 2
@@ -335,15 +335,15 @@ export default function Home() {
               {/* Trust Indicators */}
               <div className="flex items-center space-x-6 text-sm text-gray-400">
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-5 h-5 text-amber-400" />
+                  <CheckCircle className="w-5 h-5 text-teal-400" />
                   <span>{videos.length}+ Training Videos</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-5 h-5 text-amber-400" />
+                  <CheckCircle className="w-5 h-5 text-teal-400" />
                   <span>Expert Instructors</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-5 h-5 text-amber-400" />
+                  <CheckCircle className="w-5 h-5 text-teal-400" />
                   <span>Professional Community</span>
                 </div>
               </div>
@@ -353,8 +353,8 @@ export default function Home() {
             <div className="relative">
               <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 shadow-2xl">
                 <div className="text-center mb-6">
-                  <Play className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-amber-400 mb-2">Featured Training</h3>
+                  <Play className="w-16 h-16 text-teal-400 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-teal-400 mb-2">Featured Training</h3>
                   <p className="text-gray-400">Professional medical aesthetics content</p>
                 </div>
                 
@@ -394,7 +394,7 @@ export default function Home() {
                         
                         {/* Fallback gradient background */}
                         <div className={`w-full h-full bg-gradient-to-br from-amber-400/30 to-purple-500/30 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
-                          <Play className="w-6 h-6 text-amber-400 group-hover:scale-110 transition-transform" />
+                          <Play className="w-6 h-6 text-teal-400 group-hover:scale-110 transition-transform" />
                         </div>
                         
                         {/* Play Overlay */}
@@ -441,7 +441,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl font-bold text-amber-400 mb-2">{stat.value}</div>
+                <div className="text-3xl font-bold text-teal-400 mb-2">{stat.value}</div>
                 <div className="text-gray-400">{stat.label}</div>
               </div>
             ))}
@@ -455,7 +455,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">
               <span className="text-white">Featured</span>{' '}
-              <span className="text-amber-400">Training Videos</span>
+                                <span className="text-teal-400">Training Videos</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Start with these essential videos covering key topics in medical aesthetics
@@ -499,7 +499,7 @@ export default function Home() {
                   
                   {/* Fallback gradient background */}
                   <div className={`w-full h-full bg-gradient-to-br from-amber-400/20 to-purple-500/20 flex items-center justify-center ${video.thumbnail ? 'hidden' : 'flex'}`}>
-                    <Play className="w-20 h-20 text-amber-400 group-hover:scale-110 transition-transform" />
+                                            <Play className="w-20 h-20 text-teal-400 group-hover:scale-110 transition-transform" />
                   </div>
                   
                   {/* Play Overlay */}
@@ -524,7 +524,7 @@ export default function Home() {
                 {/* Content */}
                 <div className="p-6">
                   <div className="flex items-center space-x-2 mb-3">
-                    <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
+                    <span className="text-xs bg-teal-400/20 text-teal-400 px-2 py-1 rounded">
                       {categories.find(c => c.id === video.category)?.name}
                     </span>
                     {video.difficulty && (
@@ -534,7 +534,7 @@ export default function Home() {
                     )}
                   </div>
 
-                  <h3 className="font-semibold text-lg mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
+                  <h3 className="font-semibold text-lg mb-3 group-hover:text-teal-400 transition-colors line-clamp-2">
                     {video.title}
                   </h3>
 
@@ -543,7 +543,7 @@ export default function Home() {
                   </p>
 
                   {video.instructor && (
-                    <p className="text-amber-400 text-sm mb-4 font-medium">
+                    <p className="text-teal-400 text-sm mb-4 font-medium">
                       Instructor: {video.instructor}
                     </p>
                   )}
@@ -556,7 +556,7 @@ export default function Home() {
                         </span>
                       ))}
                     </div>
-                    <ChevronRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-5 h-5 text-teal-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </motion.div>
@@ -567,7 +567,7 @@ export default function Home() {
           <div className="text-center">
             <button
               onClick={() => router.push('/videos')}
-              className="inline-flex items-center space-x-3 px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
+              className="inline-flex items-center space-x-3 px-8 py-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-all font-bold text-lg"
             >
               <span>View All 201+ Videos</span>
               <ArrowRight className="w-6 h-6" />
@@ -582,7 +582,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               EXPLORE VIDEOS BY<br />
-              <span className="text-amber-400">CATEGORY</span>
+              <span className="text-teal-400">CATEGORY</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Browse our complete library of 201+ videos organized by topic and expertise level
@@ -596,12 +596,12 @@ export default function Home() {
                 <div key={category.id} className="bg-black/50 rounded-xl overflow-hidden border border-gray-800">
                   <div className="p-6">
                     <div className="flex items-center space-x-3 mb-4">
-                      <div className="w-12 h-12 bg-amber-400/20 rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 bg-teal-400/20 rounded-lg flex items-center justify-center">
                         {getIconComponent(category.icon)}
                       </div>
                       <div>
                         <h3 className="text-xl font-bold">{category.name}</h3>
-                        <p className="text-amber-400 text-sm">{category.count} videos</p>
+                        <p className="text-teal-400 text-sm">{category.count} videos</p>
                       </div>
                     </div>
                     
@@ -614,11 +614,11 @@ export default function Home() {
                           whileHover={{ 
                             scale: 1.02,
                             rotateY: 2,
-                            backgroundColor: "rgba(245, 158, 11, 0.1)"
+                            backgroundColor: "rgba(90, 155, 155, 0.1)"
                           }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
-                          <div className="w-16 h-12 bg-gradient-to-br from-amber-400/20 to-purple-500/20 rounded overflow-hidden flex-shrink-0">
+                          <div className="w-16 h-12 bg-gradient-to-br from-teal-400/20 to-teal-500/20 rounded overflow-hidden flex-shrink-0">
                             {video.thumbnail ? (
                               <img 
                                 src={video.thumbnail} 
@@ -627,12 +627,12 @@ export default function Home() {
                               />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center">
-                                <Play className="w-6 h-6 text-amber-400" />
+                                <Play className="w-6 h-6 text-teal-400" />
                               </div>
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-sm line-clamp-2 group-hover:text-amber-400 transition-colors">
+                            <h4 className="font-medium text-sm line-clamp-2 group-hover:text-teal-400 transition-colors">
                               {video.title}
                             </h4>
                             <p className="text-xs text-gray-400 mt-1">
@@ -645,7 +645,7 @@ export default function Home() {
                     
                     <button 
                       onClick={() => router.push('/videos')}
-                      className="w-full py-3 bg-amber-400/10 text-amber-400 rounded-lg hover:bg-amber-400/20 transition-all font-medium"
+                      className="w-full py-3 bg-teal-400/10 text-teal-400 rounded-lg hover:bg-teal-400/20 transition-all font-medium"
                     >
                       View All {category.count} Videos
                     </button>
@@ -658,11 +658,11 @@ export default function Home() {
           <div className="text-center">
             <motion.button
               onClick={() => router.push('/videos')}
-              className="px-8 py-4 bg-amber-400 text-black rounded-lg hover:bg-amber-500 transition-all font-bold text-lg"
+              className="px-8 py-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-all font-bold text-lg"
               whileHover={{ 
                 scale: 1.05,
                 rotateY: 5,
-                boxShadow: "0 20px 40px rgba(245, 158, 11, 0.3)"
+                boxShadow: "0 20px 40px rgba(90, 155, 155, 0.3)"
               }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300 }}
@@ -679,7 +679,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               COMPLETE VIDEO LIBRARY<br />
-              <span className="text-amber-400">ALL {videos.length}+ VIDEOS</span>
+              <span className="text-teal-400">ALL {videos.length}+ VIDEOS</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Every single video in our library, organized for easy browsing and discovery
@@ -689,21 +689,21 @@ export default function Home() {
           {/* Video Grid - Show all videos */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             {videos.map((video) => (
-              <motion.div
-                key={video.id}
-                className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-amber-400/50 cursor-pointer group"
-                onClick={() => openVideo(video)}
-                whileHover={{ 
-                  scale: 1.03, 
-                  rotateY: 3, 
-                  z: 30, 
-                  borderColor: "#f59e0b",
-                  boxShadow: "0 20px 40px rgba(245, 158, 11, 0.2)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className="relative aspect-video bg-gradient-to-br from-amber-400/20 to-purple-500/20">
+                              <motion.div
+                  key={video.id}
+                  className="bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-teal-400/50 cursor-pointer group"
+                  onClick={() => openVideo(video)}
+                  whileHover={{ 
+                    scale: 1.03, 
+                    rotateY: 3, 
+                    z: 30, 
+                    borderColor: "#5A9B9B",
+                    boxShadow: "0 20px 40px rgba(90, 155, 155, 0.2)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                                  <div className="relative aspect-video bg-gradient-to-br from-teal-400/20 to-teal-500/20">
                   {video.thumbnail ? (
                     <img 
                       src={video.thumbnail} 
@@ -728,7 +728,7 @@ export default function Home() {
                 
                 <div className="p-4">
                   <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-xs bg-amber-400/20 text-amber-400 px-2 py-1 rounded">
+                    <span className="text-xs bg-teal-400/20 text-teal-400 px-2 py-1 rounded">
                       {video.category}
                     </span>
                     {video.difficulty && (
