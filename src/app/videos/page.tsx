@@ -107,9 +107,8 @@ export default function VideosPage() {
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="/" className="hover:text-amber-400 transition-colors">Home</a>
-              <a href="/platform" className="hover:text-amber-400 transition-colors">Platform</a>
-              <a href="/concept" className="hover:text-amber-400 transition-colors">Concept</a>
+              <a href="/" className="hover:text-teal-400 transition-colors">Home</a>
+              <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
             </nav>
           </div>
         </div>

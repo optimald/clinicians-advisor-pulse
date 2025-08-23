@@ -27,8 +27,10 @@ export default function Home() {
 
 
 
-  // Get featured videos for homepage showcase
-  const featuredVideos = videos.slice(0, 20) // First 20 videos as featured
+  // Get top 12 most viewed videos for homepage showcase
+  const featuredVideos = videos
+    .sort((a, b) => b.views - a.views) // Sort by views (descending)
+    .slice(0, 12); // Top 12 most viewed videos
 
   // Platform data
   const courses = [
@@ -197,10 +199,9 @@ export default function Home() {
                 />
             </div>
 
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="/videos" className="hover:text-teal-400 transition-colors">Video Library</a>
-              <a href="/concept" className="hover:text-teal-400 transition-colors">Concept</a>
-            </nav>
+                          <nav className="hidden md:flex items-center space-x-8">
+                <a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a>
+              </nav>
 
             <div className="flex items-center space-x-4">
               <button
@@ -318,7 +319,7 @@ export default function Home() {
               {/* Request Video Button */}
               <div className="flex justify-center mb-6">
                 <motion.button
-                  onClick={() => router.push('/videos#request-video')}
+                  onClick={() => router.push('/request')}
                   className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 text-teal-400 rounded-lg font-medium transition-all border border-gray-700 hover:border-teal-400/50"
                   whileHover={{ 
                     scale: 1.02,
@@ -425,9 +426,9 @@ export default function Home() {
 
                 <button
                   onClick={() => router.push('/videos')}
-                  className="w-full bg-amber-400 text-black py-3 rounded-lg hover:bg-amber-500 transition-all font-medium"
+                  className="w-full bg-teal-500 text-white py-3 rounded-lg hover:bg-teal-600 transition-all font-medium"
                 >
-                  Browse All Videos
+                  Browse Full Collection
                 </button>
               </div>
             </div>
@@ -458,7 +459,7 @@ export default function Home() {
                                 <span className="text-teal-400">Training Videos</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Start with these essential videos covering key topics in medical aesthetics
+              Start with these top 12 most viewed videos covering key topics in medical aesthetics
             </p>
           </div>
 
@@ -563,13 +564,13 @@ export default function Home() {
             ))}
           </div>
 
-          {/* View All Videos CTA */}
+          {/* View Full Collection CTA */}
           <div className="text-center">
             <button
               onClick={() => router.push('/videos')}
               className="inline-flex items-center space-x-3 px-8 py-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-all font-bold text-lg"
             >
-              <span>View All 201+ Videos</span>
+              <span>View Full Video Collection</span>
               <ArrowRight className="w-6 h-6" />
             </button>
           </div>
@@ -1048,7 +1049,11 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <Star className="w-8 h-8 text-amber-400" />
+                <img
+                  src="/ca-logo-transparent.png"
+                  alt="CliniciansAdvisor Logo"
+                  className="h-8 w-auto"
+                />
                 <h3 className="text-xl font-bold">CliniciansAdvisor</h3>
               </div>
               <p className="text-gray-400">
@@ -1059,19 +1064,19 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Platform</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Home</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Master courses</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Policies</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Experts</a></li>
+                <li><a href="/" className="hover:text-teal-400 transition-colors">Home</a></li>
+                <li><a href="/videos" className="hover:text-teal-400 transition-colors">Video Library</a></li>
+                <li><a href="/request" className="hover:text-teal-400 transition-colors">Request Video</a></li>
+                <li><a href="/concept" className="hover:text-teal-400 transition-colors">Platform Concept</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">About</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Terms and Conditions</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Cookies</a></li>
+                <li><a href="#" className="hover:text-teal-400 transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-teal-400 transition-colors">Terms and Conditions</a></li>
+                <li><a href="#" className="hover:text-teal-400 transition-colors">Cookies</a></li>
               </ul>
             </div>
 
